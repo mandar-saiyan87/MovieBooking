@@ -2,6 +2,7 @@ from flask import Blueprint, jsonify, request
 from bson import ObjectId
 from db import db
 from config import User
+from flask_bcrypt import check_password_hash
 
 
 user_routes = Blueprint('/api/users', __name__)
@@ -12,16 +13,14 @@ def get_users():
     return {'success': 'test ok'}
 
 
-@user_routes.route('/api/users', methods=['POST'])
+@user_routes.route('/api/users/register', methods=['POST'])
 def register_user():
     userData = request.json
     newUser = User(userData).to_dict()
-    # print(newUser)
     try:
         userExist = db.users.find_one({"email": newUser["email"]})
-        print(userExist)
         if userExist:
-            return {"status": "Duplicate", "msg": "User exists with email id"}
+            return {"status": "Warning", "msg": "User exists with email id"}
         else:
             result = db.users.insert_one(newUser)
             if result.acknowledged:
@@ -33,8 +32,16 @@ def register_user():
         return {"status": "Failed", "srverror": str(e), "msg": "Someting went wrong, please try again later!"}
 
 
-@user_routes.route('/api/users', methods=['POST'])
+@user_routes.route('/api/users/login', methods=['POST'])
 def login():
-    userData = request.json
-    print(userData)
-    return {"msg": "User found"}
+    loginData = request.json
+    userData = db.users.find_one({'email': loginData['email']})
+    if userData:
+        pass_valid = check_password_hash(
+            userData['password'], loginData['password'])
+        if pass_valid:
+            return {"msg": "User found"}
+        else:
+            return {"msg": "Password doesn't match"}
+    else:
+        return {"msg": "User not found"}
