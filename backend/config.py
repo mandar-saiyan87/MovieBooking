@@ -8,7 +8,7 @@ class DBConfig:
 
 class AppConfig:
     DEBUG = True
-
+    JWT_SECRET_KEY = '723b1c11dd4ec026fe79'
 
 
 class User:
@@ -25,4 +25,3 @@ class User:
             "password": self.password,
             "timestamp": self.timestamp
         }
-

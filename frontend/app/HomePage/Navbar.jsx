@@ -1,7 +1,28 @@
-import React from 'react'
+'use client'
+import React, { useEffect} from 'react'
 import Link from 'next/link'
+import Cookies from 'js-cookie';
+import userStore from '../store/Store';
+
 
 const Navbar = () => {
+
+  const user = userStore((state) => state.current_user)
+  const setUser = userStore((state) => state.setUser)
+  const token = Cookies.get('token')
+
+  useEffect(() => {
+    if (user === null && token) {
+      const res = fetch('http://127.0.0.1:5000/api/users/profile', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      }).then(response => response.json()).then(data => setUser(data.userInfo))
+        .catch(error => console.error(error))
+    }
+  })
+
   return (
     <div className='w-full max-w-[1920px] m-auto'>
       <header className='py-3 px-4 flex justify-between bg-white'>
@@ -23,7 +44,7 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
-        <Link href='/auth/?service=login' className='flex px-3 border-[1px] gap-2.5 rounded-full items-center cursor-pointer'>
+        <Link href={user ? '/account' : '/auth/?service=login'} className='flex px-3 border-[1px] gap-2.5 rounded-full items-center cursor-pointer'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>

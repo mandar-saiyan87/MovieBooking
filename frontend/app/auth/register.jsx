@@ -31,7 +31,7 @@ const Register = () => {
       return { status: 'Failed', msg: 'Name should be atleast 3 characters' }
     }
 
-    if (!validator.isEmail(newUser.email)) {
+    if (!validator.isEmail(info.email)) {
       return { status: 'Failed', msg: 'Please enter valid email' }
     }
 
@@ -118,7 +118,6 @@ const Register = () => {
           <AuthMsg status={authMsg.status} message={authMsg.message} />
         </div>
       }
-
     </div>
   )
 }
