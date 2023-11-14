@@ -1,5 +1,6 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 from flask_bcrypt import generate_password_hash
+from flask_jwt_extended import JWTManager
 
 
 class DBConfig:
@@ -8,10 +9,12 @@ class DBConfig:
 
 class AppConfig:
     DEBUG = True
+    SECRET_KEY = '28d198718ec1995'
     JWT_SECRET_KEY = '723b1c11dd4ec026fe79'
+    JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=9)
 
 
-class User:
+class NewUser:
     def __init__(self, userData):
         self.name = userData['name']
         self.email = userData['email']

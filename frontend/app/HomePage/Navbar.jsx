@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import Cookies from 'js-cookie';
 import userStore from '../store/Store';
@@ -44,7 +44,7 @@ const Navbar = () => {
             </svg>
           </button>
         </div>
-        <Link href={user ? '/account' : '/auth/?service=login'} className='flex px-3 border-[1px] gap-2.5 rounded-full items-center cursor-pointer'>
+        <Link href={user ? '/account/?page=profile' : '/auth/login'} className='flex px-3 border-[1px] gap-2.5 rounded-full items-center cursor-pointer'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>

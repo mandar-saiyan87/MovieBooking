@@ -39,6 +39,6 @@
   }
 
   button.primary {
-    @apply bg-primary text-white font-medium py-2 rounded-lg my-3
+    @apply bg-primary text-white font-medium py-2 rounded-lg my-3 active:opacity-75
   }
 }

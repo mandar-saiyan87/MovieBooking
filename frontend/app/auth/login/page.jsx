@@ -2,17 +2,14 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useContext } from 'react'
-import { AppContext } from '../store/AppContext'
 import validator from 'validator';
 import Cookies from 'js-cookie';
-import AuthMsg from '../components/messages/AuthMsg';
-import userStore from '../store/Store'
+import AuthMsg from '../../components/messages/AuthMsg';
+import userStore from '../../store/Store'
 
 const Login = () => {
 
-  // const context = useContext(AppContext)
-  // const { setUser } = context
+
   const setCurrent = userStore((state) => state.setUser)
   const router = useRouter()
 
@@ -66,7 +63,7 @@ const Login = () => {
             body: JSON.stringify(loginUser)
           })
         const data = await res.json()
-        console.log(data)
+        // console.log(data)
         if (data.status === 'Success') {
           setCurrent(data.userDetails)
           const token = data.token
@@ -117,7 +114,7 @@ const Login = () => {
             <input type="password" id="password" name="password" placeholder='password' onChange={handleChange} value={loginUser.password} />
             <button className='primary'>Login</button>
           </form>
-          <p className='text-slate-400'>Don't have an account? <Link href='/auth/?service=register' className='underline text-primary'>Register Here</Link></p>
+          <p className='text-slate-400'>Don't have an account? <Link href='/auth/register' className='underline text-primary'>Register Here</Link></p>
         </div>
       </div>
       {
