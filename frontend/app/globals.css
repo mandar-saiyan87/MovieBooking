@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply m-auto bg-slate-100 overflow-x-hidden antialiased
+    @apply m-auto bg-white overflow-x-hidden antialiased
   }
 
   ::-webkit-scrollbar {
@@ -34,11 +34,17 @@
 
   input[type='text'],
   input[type='password'],
-  input[type='email'] {
-    @apply border-[1px] my-3 px-3 py-2 rounded-lg focus:outline-primary
+  input[type='email'],
+  textarea {
+    @apply border-[1px] px-3 py-2 rounded-lg focus:outline-primary
   }
 
   button.primary {
     @apply bg-primary text-white font-medium py-2 rounded-lg my-3 active:opacity-75
   }
+
+  .btnfunc {
+    @apply bg-primary text-white rounded-full py-2 px-4 font-medium
+  }
+
 }

@@ -57,14 +57,14 @@ const Register = () => {
       }, 4000)
     } else {
       try {
-        const res = await fetch('http://127.0.0.1:5000/api/users/register', {
+        const req = await fetch('http://127.0.0.1:5000/api/users/register', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify(newUser)
         })
-        const data = await res.json()
+        const data = await req.json()
         // console.log(data)
         setAuthMsg({
           status: data.status,
@@ -105,12 +105,12 @@ const Register = () => {
         <div className='text-center w-full max-w-lg mt-44'>
           <h2 className='text-2xl font-medium mb-2 tracking-wide'>Register</h2>
           <form className='w-full px-4 flex flex-col' onSubmit={submitForm} noValidate>
-            <input type="text" id='name' name='name' placeholder='John Doe' onChange={handleChange} value={newUser.name} />
-            <input type="email" id='email' name='email' placeholder='you@email.com' onChange={handleChange} value={newUser.email} />
-            <input type="password" id='password' name='password' placeholder='password' onChange={handleChange} value={newUser.password} />
+            <input type="text" id='name' name='name' placeholder='John Doe' onChange={handleChange} value={newUser.name} className='my-3' />
+            <input type="email" id='email' name='email' placeholder='you@email.com' onChange={handleChange} value={newUser.email} className='my-3' />
+            <input type="password" id='password' name='password' placeholder='password' onChange={handleChange} value={newUser.password} className='my-3' />
             <button className='primary'>Register</button>
           </form>
-          <p className='text-slate-400'>Already have an account? <Link href='/auth/?service=login' className='underline text-primary'>Login</Link></p>
+          <p className='text-slate-400'>Already have an account? <Link href='/auth/login' className='underline text-primary'>Login</Link></p>
         </div>
       </div>
       {

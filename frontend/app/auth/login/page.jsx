@@ -54,7 +54,7 @@ const Login = () => {
 
     } else {
       try {
-        const res = await fetch('http://127.0.0.1:5000/api/users/login',
+        const req = await fetch('http://127.0.0.1:5000/api/users/login',
           {
             method: 'POST',
             headers: {
@@ -62,7 +62,7 @@ const Login = () => {
             },
             body: JSON.stringify(loginUser)
           })
-        const data = await res.json()
+        const data = await req.json()
         // console.log(data)
         if (data.status === 'Success') {
           setCurrent(data.userDetails)
@@ -110,8 +110,8 @@ const Login = () => {
         <div className='text-center w-full max-w-lg mt-44'>
           <h2 className='text-2xl font-medium mb-2 tracking-wide'>Login</h2>
           <form className='w-full px-4 flex flex-col' onSubmit={handleUserLogin} noValidate>
-            <input type="email" id="email" name="email" placeholder='you@email.com' onChange={handleChange} value={loginUser.email} />
-            <input type="password" id="password" name="password" placeholder='password' onChange={handleChange} value={loginUser.password} />
+            <input type="email" id="email" name="email" placeholder='you@email.com' onChange={handleChange} value={loginUser.email} className='my-3'/>
+            <input type="password" id="password" name="password" placeholder='password' onChange={handleChange} value={loginUser.password} className='my-3' />
             <button className='primary'>Login</button>
           </form>
           <p className='text-slate-400'>Don't have an account? <Link href='/auth/register' className='underline text-primary'>Register Here</Link></p>

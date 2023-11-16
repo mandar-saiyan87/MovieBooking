@@ -12,6 +12,7 @@ class AppConfig:
     SECRET_KEY = '28d198718ec1995'
     JWT_SECRET_KEY = '723b1c11dd4ec026fe79'
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=9)
+    UPLOAD_FOLDER = 'photo_uploads'
 
 
 class NewUser:
