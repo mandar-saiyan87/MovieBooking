@@ -70,6 +70,7 @@ const Login = () => {
           Cookies.set('token', token, { expires: 1 })
           router.push('/')
         } else {
+          console.log(data)
           setAuthMsg({
             status: 'Failed',
             message: 'Login unsuccessful, Please try again!'
@@ -110,7 +111,7 @@ const Login = () => {
         <div className='text-center w-full max-w-lg mt-44'>
           <h2 className='text-2xl font-medium mb-2 tracking-wide'>Login</h2>
           <form className='w-full px-4 flex flex-col' onSubmit={handleUserLogin} noValidate>
-            <input type="email" id="email" name="email" placeholder='you@email.com' onChange={handleChange} value={loginUser.email} className='my-3'/>
+            <input type="email" id="email" name="email" placeholder='you@email.com' onChange={handleChange} value={loginUser.email} className='my-3' />
             <input type="password" id="password" name="password" placeholder='password' onChange={handleChange} value={loginUser.password} className='my-3' />
             <button className='primary'>Login</button>
           </form>
