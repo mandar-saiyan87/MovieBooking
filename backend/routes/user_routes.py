@@ -55,7 +55,6 @@ def login():
                 access_token = create_access_token(
                     identity=userData['email'])
                 session['id'] = str(userData['_id'])
-                print(session.get('id'))
                 return {
                     "status": "Success",
                     "msg": "User logged in successfully",
