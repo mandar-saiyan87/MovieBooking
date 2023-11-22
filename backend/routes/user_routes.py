@@ -2,6 +2,7 @@ import os
 from datetime import datetime, timedelta
 from flask import Blueprint, jsonify, request, url_for, redirect, session
 from bson import ObjectId
+import requests
 from db import mongodb
 from config import NewUser, AppConfig, allowed_file, NewPlace
 from flask_bcrypt import check_password_hash
@@ -117,33 +118,39 @@ def upload_link_photo():
         return {'status': 'Failed', 'msg': 'Error downloading image', 'error': str(e)}
 
     # check folder for current user, if not create
-    user_folder = os.path.join(
-        AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/{folder_title}')
-    if not os.path.exists(user_folder):
-        os.mkdir(user_folder)
+    try:
+        user_folder = os.path.join(
+            AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/{str(folder_title).replace(" ", "_")}')
 
-    # filename from url
-    base, extension = os.path.splitext(image_url)
-    filename = os.path.join(
-        user_folder, f'{os.path.basename(base)}.jpg')
-    # print(filename)
+        if not os.path.exists(user_folder):
+            os.makedirs(user_folder)
 
-    # save image to folder
-    with open(filename, 'wb') as f:
-        f.write(response.content)
+        # print(user_folder)
 
-    # user_images = [url_for('photo_upload', filename=f'{userId}/{img}')
-    #                for img in os.listdir(user_folder) if img.endswith('.jpg')]
+        # filename from url
+        base, extension = os.path.splitext(image_url)
+        filename = os.path.join(
+            user_folder, f'{os.path.basename(base)}.jpg')
+        # print(filename)
 
-    user_images = []
-    for img in os.listdir(user_folder):
-        img_url = url_for(
-            'static', filename=f'photo_uploads/{userId}/{folder_title}/{img}')
-        user_images.append(img_url)
+        # save image to folder
+        with open(filename, 'wb') as f:
+            f.write(response.content)
 
-    # print(user_images)
+        # user_images = [url_for('photo_upload', filename=f'{userId}/{img}')
+        #                for img in os.listdir(user_folder) if img.endswith('.jpg')]
 
-    return {'status': 'Success', 'msg': 'Image saved successfully', 'userImages': user_images}
+        user_images = []
+        for img in os.listdir(user_folder):
+            img_url = url_for(
+                'static', filename=f'photo_uploads/{userId}/{folder_title}/{img}')
+            user_images.append(img_url)
+
+        print(user_images)
+
+        return {'status': 'Success', 'msg': 'Image saved successfully', 'userImages': user_images}
+    except Exception as e:
+        return {'status': 'Failed', 'msg': 'Couldn\'t save image',  "error": str(e)}
 
 
 @user_routes.route('/api/users/photofromdevice', methods=['POST'])
@@ -152,7 +159,7 @@ def upload_device_photo():
 
     userId = get_user()
     data = request.files['file']
-    folder_name = request.form.get('title')
+    folder_name = request.form.get('title').replace(" ", "_")
     # print(data)
     # print(folder_name)
     # return {"status": "In progress", "msg": "In progress"}
@@ -161,12 +168,14 @@ def upload_device_photo():
         return {"status": "Failed", "msg": "No file selected"}
 
     try:
-        if allowed_file(data.filename):
-            user_folder = os.path.join(
-                AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/{folder_name}')
-            if not os.path.exists(user_folder):
-                os.mkdir(user_folder)
+        user_folder = os.path.join(
+            AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/{folder_name}')
+        if not os.path.exists(user_folder):
+            os.makedirs(user_folder)
 
+        # print(user_folder)
+
+        if allowed_file(data.filename):
             filename = secure_filename(data.filename)
             data.save(os.path.join(user_folder, filename))
 

@@ -58,7 +58,7 @@ const NewPlace = ({ setForm }) => {
       body: JSON.stringify({ title: title, image_url: photoLink })
     })
     const data = await req.json()
-    // console.log(data)
+    console.log(data)
     if (data.status === 'Success') {
       setPhotos(data.userImages)
     }

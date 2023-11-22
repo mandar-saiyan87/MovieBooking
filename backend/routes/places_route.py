@@ -13,4 +13,17 @@ places_routes = Blueprint('/api/places', __name__)
 @jwt_required()
 def get_user_places():
     current_user = get_user()
-    return {"status": "In progress", "msg": "In progress"}
+    try:
+        records = mongodb.places.find({'usrid': current_user})
+        user_places = []
+        for place in records:
+            place['_id'] = str(place['_id'])
+            user_places.append(place)
+        
+        if len(user_places) > 0:
+            print(user_places)
+            return {"status": "Success", "msg": "Places found for user", "user_palces": user_places}
+        else:
+            return {"status": "Failed", "msg": "No places found"}
+    except Exception as e:
+        return {"status": "Failed", "msg": "Something went wrong", "error": str(e)}
