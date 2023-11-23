@@ -1,6 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { useRouter} from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import userStore from '../../store/Store';
 import Cookies from 'js-cookie';
 import AuthMsg from '../../components/messages/AuthMsg';
@@ -9,7 +9,7 @@ const Profile = () => {
 
   const [redirectTo, setRedirectTo] = useState(false)
 
-  const router = useRouter()  
+  const router = useRouter()
   const setCurrent = userStore((state) => state.setUser)
   const current_user = userStore((state) => state.current_user)
 
@@ -46,9 +46,11 @@ const Profile = () => {
   }
 
   if (redirectTo) {
-    // redirect('/')
     router.push('/')
-    setCurrent(null)
+    setTimeout(() => {
+      setCurrent(null)
+    }, [400])
+
   }
 
 
