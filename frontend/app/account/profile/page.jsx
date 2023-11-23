@@ -1,14 +1,15 @@
 'use client'
 import React, { useState } from 'react'
-import { redirect } from 'next/navigation';
-import userStore from '../store/Store';
+import { useRouter} from 'next/navigation';
+import userStore from '../../store/Store';
 import Cookies from 'js-cookie';
-import AuthMsg from '../components/messages/AuthMsg';
+import AuthMsg from '../../components/messages/AuthMsg';
 
-const Profile = ({ setredirect, redirectTo }) => {
+const Profile = () => {
 
-  
+  const [redirectTo, setRedirectTo] = useState(false)
 
+  const router = useRouter()  
   const setCurrent = userStore((state) => state.setUser)
   const current_user = userStore((state) => state.current_user)
 
@@ -26,8 +27,8 @@ const Profile = ({ setredirect, redirectTo }) => {
     const data = await res.json()
     if (data.status === 'Success') {
       Cookies.remove('token')
-      setredirect(true)
-      setCurrent(null)
+      setRedirectTo(true)
+      // setCurrent(null)
     }
     else {
       setAuthMsg({
@@ -45,7 +46,9 @@ const Profile = ({ setredirect, redirectTo }) => {
   }
 
   if (redirectTo) {
-    redirect('/')
+    // redirect('/')
+    router.push('/')
+    setCurrent(null)
   }
 
 

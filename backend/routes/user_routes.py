@@ -192,6 +192,38 @@ def upload_device_photo():
         return {"status": 'Failed', "msg": "Something went wrong please try again", "error": str(e)}
 
 
+@user_routes.route('/api/users/deletephoto', methods=['POST'])
+@jwt_required()
+def delete_image():
+    userId = get_user()
+    image_path = request.json['imgpath'].lstrip('/')
+    try:
+        if os.path.exists(image_path):
+            os.remove(image_path)
+        
+        user_folder = os.path.join(
+        AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/Treebo_Trend_Five_Elements')
+        
+        if not os.path.exists(user_folder):
+            os.mkdir(user_folder)
+
+    # print(user_folder)
+        if user_folder and len(user_folder) > 0:
+            user_images = []
+            for img in os.listdir(user_folder):
+                img_url = url_for(
+                'static', filename=f'photo_uploads/{userId}/Treebo_Trend_Five_Elements/{img}')
+                user_images.append(img_url)
+
+            return {'status': 'Success', 'msg': 'Image deleted', 'userImages': user_images}
+        else:
+            return {'status': 'Success', 'msg': 'Could\'t delete image'}
+
+    except Exception as e:
+        return {"status": "Failed", "msg": "Something went wrong, Please try again", "error": str(e)}
+    
+
+
 @user_routes.route('/api/users/photos', methods=['GET'])
 @jwt_required()
 def get_photos():
@@ -199,7 +231,7 @@ def get_photos():
     userId = get_user()
 
     user_folder = os.path.join(
-        AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}')
+        AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/Treebo_Trend_Five_Elements')
     if not os.path.exists(user_folder):
         os.mkdir(user_folder)
 
@@ -208,7 +240,7 @@ def get_photos():
         user_images = []
         for img in os.listdir(user_folder):
             img_url = url_for(
-                'static', filename=f'photo_uploads/{userId}/{img}')
+                'static', filename=f'photo_uploads/{userId}/Treebo_Trend_Five_Elements/{img}')
             user_images.append(img_url)
 
         return {'status': 'Success', 'msg': 'Image retrived successfully', 'userImages': user_images}

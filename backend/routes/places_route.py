@@ -19,11 +19,11 @@ def get_user_places():
         for place in records:
             place['_id'] = str(place['_id'])
             user_places.append(place)
-        
+
         if len(user_places) > 0:
-            print(user_places)
-            return {"status": "Success", "msg": "Places found for user", "user_palces": user_places}
+            # print(user_places)
+            return {"status": "Success", "msg": "Places found for user", "user_places": user_places}
         else:
-            return {"status": "Failed", "msg": "No places found"}
+            return {"status": "Failed", "msg": "No places found", "user_places": []}
     except Exception as e:
         return {"status": "Failed", "msg": "Something went wrong", "error": str(e)}
