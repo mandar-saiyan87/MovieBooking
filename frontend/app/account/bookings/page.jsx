@@ -2,7 +2,12 @@ import React from 'react'
 
 const Bookings = () => {
   return (
-    <div>Bookings</div>
+    <>
+      <div className='max-w-[1536px] m-auto bg-white'>
+        <div>Bookings</div>
+      </div>
+    </>
+
   )
 }
 

@@ -27,3 +27,31 @@ def get_user_places():
             return {"status": "Failed", "msg": "No places found", "user_places": []}
     except Exception as e:
         return {"status": "Failed", "msg": "Something went wrong", "error": str(e)}
+
+
+@places_routes.route('/api/places/getplace/<id>', methods=['GET'])
+def get_place_by_id(id):
+    placeID = ObjectId(id)
+    try:
+        place = mongodb.places.find_one({'_id': placeID})
+
+        if place:
+            place['_id'] = str(place['_id'])
+            return {"status": 'Success', "msg": "Place found", "useplace": place}
+        else:
+            return {"status": 'Failed', "msg": "Place not found"}
+    except Exception as e:
+        return {"status": 'Failed', "msg": "Somthing went wrong, please try again", "error": str(e)}
+
+
+@places_routes.route('/api/places/updateplace/<id>', methods=['PUT'])
+@jwt_required()
+def update_place_by_id(id):
+    placeID = ObjectId(id)
+    placeData = request.json
+    try:
+        place = mongodb.places.find_one_and_update(
+            {'_id': placeID}, {'$set': placeData})
+        return {"status": 'Success', "msg": "Place found"}
+    except Exception as e:
+        return {"status": 'Failed', "msg": "Somthing went wrong, please try again", "error": str(e)}

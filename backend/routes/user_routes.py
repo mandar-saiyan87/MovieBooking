@@ -78,8 +78,10 @@ def login():
 @jwt_required()
 def get_profile():
     current_user = get_jwt_identity()
+    userId = get_user()
     userData = mongodb.users.find_one({'email': current_user})
     userinfo = {
+        'id': userId,
         'name': userData['name'],
         'email': userData['email']
     }
@@ -160,9 +162,6 @@ def upload_device_photo():
     userId = get_user()
     data = request.files['file']
     folder_name = request.form.get('title').replace(" ", "_")
-    # print(data)
-    # print(folder_name)
-    # return {"status": "In progress", "msg": "In progress"}
 
     if data.filename == '':
         return {"status": "Failed", "msg": "No file selected"}
@@ -197,22 +196,19 @@ def upload_device_photo():
 def delete_image():
     userId = get_user()
     image_path = request.json['imgpath'].lstrip('/')
+    folder_name = str(request.json['title']).replace(" ", "_")
     try:
         if os.path.exists(image_path):
             os.remove(image_path)
-        
-        user_folder = os.path.join(
-        AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/Treebo_Trend_Five_Elements')
-        
-        if not os.path.exists(user_folder):
-            os.mkdir(user_folder)
 
-    # print(user_folder)
+        # user_folder = os.path.join(
+        # AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/Treebo_Trend_Five_Elements')
+        user_folder = os.path.dirname(image_path)
         if user_folder and len(user_folder) > 0:
             user_images = []
             for img in os.listdir(user_folder):
                 img_url = url_for(
-                'static', filename=f'photo_uploads/{userId}/Treebo_Trend_Five_Elements/{img}')
+                    'static', filename=f'photo_uploads/{userId}/{folder_name}/{img}')
                 user_images.append(img_url)
 
             return {'status': 'Success', 'msg': 'Image deleted', 'userImages': user_images}
@@ -221,31 +217,6 @@ def delete_image():
 
     except Exception as e:
         return {"status": "Failed", "msg": "Something went wrong, Please try again", "error": str(e)}
-    
-
-
-@user_routes.route('/api/users/photos', methods=['GET'])
-@jwt_required()
-def get_photos():
-
-    userId = get_user()
-
-    user_folder = os.path.join(
-        AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/Treebo_Trend_Five_Elements')
-    if not os.path.exists(user_folder):
-        os.mkdir(user_folder)
-
-    # print(user_folder)
-    if user_folder and len(user_folder) > 0:
-        user_images = []
-        for img in os.listdir(user_folder):
-            img_url = url_for(
-                'static', filename=f'photo_uploads/{userId}/Treebo_Trend_Five_Elements/{img}')
-            user_images.append(img_url)
-
-        return {'status': 'Success', 'msg': 'Image retrived successfully', 'userImages': user_images}
-    else:
-        return {'status': 'Success', 'msg': 'There are no image', 'userImages': []}
 
 
 @user_routes.route('/api/users/newplace', methods=['POST'])
@@ -271,3 +242,27 @@ def add_newplace():
             return {"status": "Failed", "msg": "Place not added"}
     except Exception as e:
         return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
+
+
+# @user_routes.route('/api/users/photos', methods=['GET'])
+# @jwt_required()
+# def get_photos():
+
+#     userId = get_user()
+
+#     user_folder = os.path.join(
+#         AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/Treebo_Trend_Five_Elements')
+#     if not os.path.exists(user_folder):
+#         os.mkdir(user_folder)
+
+#     # print(user_folder)
+#     if user_folder and len(user_folder) > 0:
+#         user_images = []
+#         for img in os.listdir(user_folder):
+#             img_url = url_for(
+#                 'static', filename=f'photo_uploads/{userId}/Treebo_Trend_Five_Elements/{img}')
+#             user_images.append(img_url)
+
+#         return {'status': 'Success', 'msg': 'Image retrived successfully', 'userImages': user_images}
+#     else:
+#         return {'status': 'Success', 'msg': 'There are no image', 'userImages': []}

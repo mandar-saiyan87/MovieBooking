@@ -56,10 +56,13 @@ const Profile = () => {
 
   return (
     <>
-      <div className='max-w-2xl text-center m-auto'>
-        <p>Logged is as ({current_user?.email})</p>
-        <button className='btnfunc my-5 w-full max-w-sm active:opacity-75' onClick={userLogout}>Logout</button>
+      <div className='max-w-[1536px] m-auto bg-white'>
+        <div className='max-w-2xl text-center m-auto'>
+          <p>Logged is as ({current_user?.email})</p>
+          <button className='btnfunc my-5 w-full max-w-sm active:opacity-75' onClick={userLogout}>Logout</button>
+        </div>
       </div>
+
       {
         authMsg.message != '' && <div className='w-max fixed left-0 top-24'>
           <AuthMsg status={authMsg.status} message={authMsg.message} />

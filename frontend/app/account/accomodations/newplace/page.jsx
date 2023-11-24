@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState} from 'react'
 import { redirect } from 'next/dist/server/api-utils';
 import Image from 'next/image';
 import DatePicker from "react-datepicker";
@@ -7,12 +7,12 @@ import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import Amenities from './components/Amenities';
-import AuthMsg from '../components/messages/AuthMsg';
+import Amenities from '../../components/Amenities';
+import AuthMsg from '../../../components/messages/AuthMsg';
 import Cookies from 'js-cookie';
 
 
-const NewPlace = ({ setForm }) => {
+const NewPlace = () => {
 
   const [redirectTo, setRedirectTo] = useState(false)
 
@@ -36,15 +36,15 @@ const NewPlace = ({ setForm }) => {
 
 
   const token = Cookies.get('token')
-  useEffect(() => {
-    fetch('http://127.0.0.1:5000/api/users/photos', {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    }).then(response => response.json()).then(data => setPhotos(data.userImages))
-      .catch(error => console.error(error))
-  }, [])
+  // useEffect(() => {
+  //   fetch('http://127.0.0.1:5000/api/users/photos', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Authorization': `Bearer ${token}`,
+  //     },
+  //   }).then(response => response.json()).then(data => setPhotos(data.userImages))
+  //     .catch(error => console.error(error))
+  // }, [])
 
   const deletephoto = async (imgpath) => {
     const req = await fetch(`http://127.0.0.1:5000/api/users/deletephoto`, {
@@ -158,11 +158,11 @@ const NewPlace = ({ setForm }) => {
   }
 
   if (redirectTo) {
-    redirect('/account/?page=accomodations')
+    redirect('/account/accomodations')
   }
 
   return (
-    <div>
+    <div className='max-w-[1536px] m-auto bg-white py-6'>
       <form onSubmit={submitPlace}>
         <div className='w-full my-2.5'>
           <h4>Title</h4>
