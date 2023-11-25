@@ -1,16 +1,18 @@
 from datetime import datetime, timedelta
 from flask_bcrypt import generate_password_hash
 from flask_jwt_extended import JWTManager
+from dotenv import load_dotenv
+import os
 
-
+db_passwd = os.getenv('MONGO_PASSWORD')
 class DBConfig:
-    MONGO_URI = "mongodb+srv://MongoDBPRJ:gVdjR7i016fD1Zil@cluster0.u9qxrdf.mongodb.net/airbncDB?retryWrites=true&w=majority"
+    MONGO_URI = f'mongodb+srv://MongoDBPRJ:{db_passwd}@cluster0.u9qxrdf.mongodb.net/airbncDB?retryWrites=true&w=majority'
 
 
 class AppConfig:
     DEBUG = True
-    SECRET_KEY = '28d198718ec1995'
-    JWT_SECRET_KEY = '723b1c11dd4ec026fe79'
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=9)
     UPLOAD_FOLDER = 'static'
     ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
