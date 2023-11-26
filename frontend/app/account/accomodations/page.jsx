@@ -1,9 +1,19 @@
+'use client'
 import React from 'react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import userStore from '@/app/store/Store'
 import ReccomendedPlaces from '../components/ReccomendedPlaces'
 
 
 const Accomodations = () => {
+
+  const router = useRouter()
+  const currentUser = userStore((state) => state.current_user)
+
+  if (currentUser === null) {
+    router.push('/auth/login')
+  }
 
   return (
     <>
