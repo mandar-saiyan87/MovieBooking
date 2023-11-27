@@ -98,63 +98,6 @@ def logout():
         return {"msg": "Logout Failed", "status": "Failed", "error": str(e)}
 
 
-@user_routes.route('/api/users/photobylink', methods=['POST'])
-@jwt_required()
-def upload_link_photo():
-
-    userId = get_user()
-
-    # check if image url in post request
-    if 'image_url' not in request.json:
-        return {'status': 'Failed', 'msg': 'No image url provided'}
-
-    image_url = request.json['image_url']
-    folder_title = request.json['title']
-
-    # download image
-    try:
-        response = requests.get(image_url)
-        response.raise_for_status()
-        # response.content
-    except Exception as e:
-        return {'status': 'Failed', 'msg': 'Error downloading image', 'error': str(e)}
-
-    # check folder for current user, if not create
-    try:
-        user_folder = os.path.join(
-            AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/{str(folder_title).replace(" ", "_")}')
-
-        if not os.path.exists(user_folder):
-            os.makedirs(user_folder)
-
-        # print(user_folder)
-
-        # filename from url
-        base, extension = os.path.splitext(image_url)
-        filename = os.path.join(
-            user_folder, f'{os.path.basename(base)}.jpg')
-        # print(filename)
-
-        # save image to folder
-        with open(filename, 'wb') as f:
-            f.write(response.content)
-
-        # user_images = [url_for('photo_upload', filename=f'{userId}/{img}')
-        #                for img in os.listdir(user_folder) if img.endswith('.jpg')]
-
-        user_images = []
-        for img in os.listdir(user_folder):
-            img_url = url_for(
-                'static', filename=f'photo_uploads/{userId}/{folder_title}/{img}')
-            user_images.append(img_url)
-
-        print(user_images)
-
-        return {'status': 'Success', 'msg': 'Image saved successfully', 'userImages': user_images}
-    except Exception as e:
-        return {'status': 'Failed', 'msg': 'Couldn\'t save image',  "error": str(e)}
-
-
 @user_routes.route('/api/users/photofromdevice', methods=['POST'])
 @jwt_required()
 def upload_device_photo():
@@ -266,3 +209,60 @@ def add_newplace():
 #         return {'status': 'Success', 'msg': 'Image retrived successfully', 'userImages': user_images}
 #     else:
 #         return {'status': 'Success', 'msg': 'There are no image', 'userImages': []}
+
+
+# @user_routes.route('/api/users/photobylink', methods=['POST'])
+# @jwt_required()
+# def upload_link_photo():
+
+#     userId = get_user()
+
+#     # check if image url in post request
+#     if 'image_url' not in request.json:
+#         return {'status': 'Failed', 'msg': 'No image url provided'}
+
+#     image_url = request.json['image_url']
+#     folder_title = request.json['title']
+
+#     # download image
+#     try:
+#         response = requests.get(image_url)
+#         response.raise_for_status()
+#         # response.content
+#     except Exception as e:
+#         return {'status': 'Failed', 'msg': 'Error downloading image', 'error': str(e)}
+
+#     # check folder for current user, if not create
+#     try:
+#         user_folder = os.path.join(
+#             AppConfig.UPLOAD_FOLDER, f'photo_uploads/{userId}/{str(folder_title).replace(" ", "_")}')
+
+#         if not os.path.exists(user_folder):
+#             os.makedirs(user_folder)
+
+#         # print(user_folder)
+
+#         # filename from url
+#         base, extension = os.path.splitext(image_url)
+#         filename = os.path.join(
+#             user_folder, f'{os.path.basename(base)}.jpg')
+#         # print(filename)
+
+#         # save image to folder
+#         with open(filename, 'wb') as f:
+#             f.write(response.content)
+
+#         # user_images = [url_for('photo_upload', filename=f'{userId}/{img}')
+#         #                for img in os.listdir(user_folder) if img.endswith('.jpg')]
+
+#         user_images = []
+#         for img in os.listdir(user_folder):
+#             img_url = url_for(
+#                 'static', filename=f'photo_uploads/{userId}/{folder_title}/{img}')
+#             user_images.append(img_url)
+
+#         print(user_images)
+
+#         return {'status': 'Success', 'msg': 'Image saved successfully', 'userImages': user_images}
+#     except Exception as e:
+#         return {'status': 'Failed', 'msg': 'Couldn\'t save image',  "error": str(e)}
