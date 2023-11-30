@@ -5,6 +5,8 @@ from dotenv import load_dotenv
 import os
 
 db_passwd = os.getenv('MONGO_PASSWORD')
+
+
 class DBConfig:
     MONGO_URI = f'mongodb+srv://MongoDBPRJ:{db_passwd}@cluster0.u9qxrdf.mongodb.net/airbncDB?retryWrites=true&w=majority'
 
@@ -40,7 +42,7 @@ def allowed_file(filename):
 
 
 class NewPlace:
-    def __init__(self, userid, title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, extraInfo):
+    def __init__(self, userid, title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, price, extraInfo):
         self.userid = userid
         self.title = title
         self.address = address
@@ -52,6 +54,7 @@ class NewPlace:
         self.checkOut = checkOut
         self.checkOutT = checkOutT
         self.guests = guests
+        self.price = price
         self.extraInfo = extraInfo
 
     def to_dict(self):
@@ -67,5 +70,6 @@ class NewPlace:
             "checkOut": self.checkOut,
             "checkOutT": self.checkOutT,
             "guests": self.guests,
+            "price": self.price,
             "extraInfo": self.extraInfo
         }

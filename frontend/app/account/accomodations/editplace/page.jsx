@@ -32,6 +32,7 @@ const EditPlace = () => {
   const [checkOut, setcheckOut] = useState(new Date());
   const [checkOutT, setcheckOutT] = useState('10:00');
   const [guests, setGuests] = useState('')
+  const [price, setPrice] = useState(1000)
   const [extraInfo, setExtraInfo] = useState('')
 
   const [authMsg, setAuthMsg] = useState({
@@ -59,6 +60,7 @@ const EditPlace = () => {
           setcheckOutT(data.useplace.checkOutT)
           setGuests(data.useplace.guests)
           setExtraInfo(data.useplace.extraInfo)
+          setPrice(data.userplace.price)
         }
       })
       .catch(error => console.error(error))
@@ -123,7 +125,7 @@ const EditPlace = () => {
 
   const submitPlace = async (e) => {
     e.preventDefault()
-    if (title.length < 3, address.length < 3, photos.length === 0, description.length < 3, amenities.length === 0, guests.length === 0) {
+    if (title.length < 3, address.length < 3, photos.length === 0, description.length < 3, amenities.length === 0, guests.length === 0, price.length === 0) {
       setAuthMsg({
         status: 'Failed',
         message: 'All fields are required'
@@ -142,7 +144,7 @@ const EditPlace = () => {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, extraInfo
+          title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, price, extraInfo
         })
       })
       const data = await req.json()
@@ -159,6 +161,7 @@ const EditPlace = () => {
         setcheckOutT('10:00')
         setGuests('')
         setExtraInfo('')
+        setPrice(1000)
         setRedirectTo(true)
       } else {
         setAuthMsg({
@@ -269,7 +272,11 @@ const EditPlace = () => {
           <ReactQuill theme="snow" value={extraInfo} onChange={setExtraInfo} className='max-w-3xl' />
           {/* <textarea rows={3} cols={50} placeholder='House rules, etc...' onChange={e => setExtraInfo(e.target.value)} value={extraInfo} /> */}
         </div>
-        <button className='btnfunc'>Save</button>
+        <div className='w-full my-2.5'>
+          <h4>Price Per Night</h4>
+          <input type="text" className='' placeholder='5' onChange={e => setPrice(e.target.value)} value={price} />
+        </div>
+        <button className='btnfunc'>Update</button>
       </form>
       {
         authMsg.message != '' && <div className='w-max fixed left-0 top-24'>

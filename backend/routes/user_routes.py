@@ -173,7 +173,7 @@ def add_newplace():
         placeData['description'], placeData['amenities'],
         placeData['checkIn'], placeData['checkInT'],
         placeData['checkOut'], placeData['checkOutT'],
-        placeData['guests'], placeData['extraInfo'],
+        placeData['guests'], placeData['price'], placeData['extraInfo'],
     ).to_dict()
     # print(new_place)
     try:

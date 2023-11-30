@@ -9,6 +9,25 @@ from flask_jwt_extended import jwt_required
 places_routes = Blueprint('/api/places', __name__)
 
 
+
+@places_routes.route('/api/places/getplaces', methods=['GET'])
+def get_all_places():
+    try:
+        records = mongodb.places.find()
+        places = []
+        for place in records:
+            place['_id'] = str(place['_id'])
+            places.append(place)
+            
+        if len(places) > 0:
+            # print(user_places)
+            return {"status": "Success", "msg": "Places found for user", "places": places}
+        else:
+            return {"status": "Failed", "msg": "No places found", "user_places": []}
+    except Exception as e:
+        return {"status": 'Failed', "msg": "Somthing went wrong"}
+
+
 @places_routes.route('/api/places/placebyuser', methods=['GET'])
 @jwt_required()
 def get_user_places():

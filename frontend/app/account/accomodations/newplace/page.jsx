@@ -30,6 +30,7 @@ const NewPlace = () => {
   const [checkOut, setcheckOut] = useState(new Date());
   const [checkOutT, setcheckOutT] = useState('10:00');
   const [guests, setGuests] = useState('')
+  const [price, setPrice] = useState(1000)
   const [extraInfo, setExtraInfo] = useState('')
 
   const [authMsg, setAuthMsg] = useState({
@@ -97,7 +98,7 @@ const NewPlace = () => {
 
   const submitPlace = async (e) => {
     e.preventDefault()
-    if (title.length < 3, address.length < 3, photos.length === 0, description.length < 3, amenities.length === 0, guests.length === 0) {
+    if (title.length < 3, address.length < 3, photos.length === 0, description.length < 3, amenities.length === 0, guests.length === 0, price.length === 0) {
       setAuthMsg({
         status: 'Failed',
         message: 'All fields are required'
@@ -116,7 +117,7 @@ const NewPlace = () => {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, extraInfo
+          title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests,price, extraInfo
         })
       })
       const data = await req.json()
@@ -133,6 +134,7 @@ const NewPlace = () => {
         setcheckOutT('10:00')
         setGuests('')
         setExtraInfo('')
+        setPrice(100)
         setRedirectTo(true)
       } else {
         setAuthMsg({
@@ -238,6 +240,10 @@ const NewPlace = () => {
         <div className='w-full my-2.5'>
           <h4>Max Number of Guests</h4>
           <input type="text" className='' placeholder='5' onChange={e => setGuests(e.target.value)} value={guests} />
+        </div>
+        <div className='w-full my-2.5'>
+          <h4>Price Per Night</h4>
+          <input type="text" className='' placeholder='5' onChange={e => setPrice(e.target.value)} value={price} />
         </div>
         <div className='w-full my-2.5'>
           <h4>Extra Info</h4>
