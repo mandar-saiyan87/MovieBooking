@@ -2,8 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import { redirect, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-date-picker';
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
@@ -32,7 +33,7 @@ const EditPlace = () => {
   const [checkOut, setcheckOut] = useState(new Date());
   const [checkOutT, setcheckOutT] = useState('10:00');
   const [guests, setGuests] = useState('')
-  const [price, setPrice] = useState(1000)
+  const [price, setPrice] = useState('1000')
   const [extraInfo, setExtraInfo] = useState('')
 
   const [authMsg, setAuthMsg] = useState({
@@ -48,19 +49,20 @@ const EditPlace = () => {
 
     }).then(response => response.json())
       .then(data => {
+        console.log(data)
         if (data.status === 'Success') {
-          setTitle(data.useplace.title)
-          setAddress(data.useplace.address)
-          setPhotos(data.useplace.photos)
-          setDescription(data.useplace.description)
-          setAmenities(data.useplace.amenities)
-          setcheckIn(new Date(data.useplace.checkIn))
-          setcheckInT(data.useplace.checkInT)
-          setcheckOut(new Date(data.useplace.checkOut))
-          setcheckOutT(data.useplace.checkOutT)
-          setGuests(data.useplace.guests)
-          setExtraInfo(data.useplace.extraInfo)
-          setPrice(data.userplace.price)
+          setTitle(data.user_place.title)
+          setAddress(data.user_place.address)
+          setPhotos(data.user_place.photos)
+          setDescription(data.user_place.description)
+          setAmenities(data.user_place.amenities)
+          setcheckIn(new Date(data.user_place.checkIn))
+          setcheckInT(data.user_place.checkInT)
+          setcheckOut(new Date(data.user_place.checkOut))
+          setcheckOutT(data.user_place.checkOutT)
+          setGuests(data.user_place.guests)
+          setPrice(data.user_place.price)
+          setExtraInfo(data.user_place.extraInfo)
         }
       })
       .catch(error => console.error(error))
@@ -125,7 +127,7 @@ const EditPlace = () => {
 
   const submitPlace = async (e) => {
     e.preventDefault()
-    if (title.length < 3, address.length < 3, photos.length === 0, description.length < 3, amenities.length === 0, guests.length === 0, price.length === 0) {
+    if (title.length < 3 || address.length < 3 || photos.length === 0 || description.length < 3 || amenities.length === 0 || guests.length === 0 || price.length === 0) {
       setAuthMsg({
         status: 'Failed',
         message: 'All fields are required'
@@ -161,7 +163,7 @@ const EditPlace = () => {
         setcheckOutT('10:00')
         setGuests('')
         setExtraInfo('')
-        setPrice(1000)
+        setPrice('1000')
         setRedirectTo(true)
       } else {
         setAuthMsg({
@@ -251,14 +253,14 @@ const EditPlace = () => {
           <div className='my-1.5'>
             <h4>Check In</h4>
             <div className='flex gap-5'>
-              <DatePicker selected={checkIn} onChange={(date) => setcheckIn(date)} />
+              <DatePicker value={checkIn} onChange={setcheckIn} />
               <TimePicker onChange={setcheckInT} value={checkInT} />
             </div>
           </div>
           <div className='my-1.5'>
             <h4>Check Out</h4>
             <div className='flex gap-5'>
-              <DatePicker selected={checkOut} onChange={(date) => setcheckOut(date)} />
+              <DatePicker value={checkOut} onChange={setcheckOut} />
               <TimePicker onChange={setcheckOutT} value={checkOutT} />
             </div>
           </div>
@@ -268,14 +270,15 @@ const EditPlace = () => {
           <input type="text" className='' placeholder='5' onChange={e => setGuests(e.target.value)} value={guests} />
         </div>
         <div className='w-full my-2.5'>
+          <h4>Price Per Night</h4>
+          <input type="text" className='' placeholder='5' onChange={e => setPrice(e.target.value)} value={price} />
+        </div>
+        <div className='w-full my-2.5'>
           <h4>Extra Info</h4>
           <ReactQuill theme="snow" value={extraInfo} onChange={setExtraInfo} className='max-w-3xl' />
           {/* <textarea rows={3} cols={50} placeholder='House rules, etc...' onChange={e => setExtraInfo(e.target.value)} value={extraInfo} /> */}
         </div>
-        <div className='w-full my-2.5'>
-          <h4>Price Per Night</h4>
-          <input type="text" className='' placeholder='5' onChange={e => setPrice(e.target.value)} value={price} />
-        </div>
+
         <button className='btnfunc'>Update</button>
       </form>
       {

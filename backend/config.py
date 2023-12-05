@@ -73,3 +73,26 @@ class NewPlace:
             "price": self.price,
             "extraInfo": self.extraInfo
         }
+        
+class NewBooking:
+    def __init__(self, placeid, userid, fname, contact, amount, checkIn, checkOut, numofguests):
+        self.userid = userid
+        self.placeid = placeid
+        self.fname = fname
+        self.contact = contact
+        self.amount = amount
+        self.checkIn = checkIn
+        self.checkOut = checkOut
+        self.numofguests = numofguests
+        
+    def to_dict(self):
+        return {
+            "usrid": self.userid,
+            "placeid": self.placeid,
+            "fname": self.fname,
+            "contact": self.contact,
+            "amount": self.amount,
+            "checkIn": self.checkIn,
+            "checkOut": self.checkOut,
+            "numofguests": self.numofguests,
+        }

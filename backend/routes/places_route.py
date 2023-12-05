@@ -9,7 +9,6 @@ from flask_jwt_extended import jwt_required
 places_routes = Blueprint('/api/places', __name__)
 
 
-
 @places_routes.route('/api/places/getplaces', methods=['GET'])
 def get_all_places():
     try:
@@ -18,7 +17,7 @@ def get_all_places():
         for place in records:
             place['_id'] = str(place['_id'])
             places.append(place)
-            
+
         if len(places) > 0:
             # print(user_places)
             return {"status": "Success", "msg": "Places found for user", "places": places}
@@ -56,7 +55,7 @@ def get_place_by_id(id):
 
         if place:
             place['_id'] = str(place['_id'])
-            return {"status": 'Success', "msg": "Place found", "useplace": place}
+            return {"status": 'Success', "msg": "Place found", "user_place": place}
         else:
             return {"status": 'Failed', "msg": "Place not found"}
     except Exception as e:

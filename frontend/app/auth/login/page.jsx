@@ -119,7 +119,7 @@ const Login = () => {
         </div>
       </div>
       {
-        authMsg.message != '' && <div className='w-max fixed left-0 top-24'>
+        authMsg.message != '' && <div className='w-max fixed left-[45%] top-24'>
           <AuthMsg status={authMsg.status} message={authMsg.message} />
         </div>
       }

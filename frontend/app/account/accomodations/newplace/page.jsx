@@ -2,8 +2,9 @@
 import React, { useState } from 'react'
 import { redirect } from 'next/navigation'
 import Image from 'next/image';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import DatePicker from 'react-date-picker';
+import 'react-date-picker/dist/DatePicker.css';
+import 'react-calendar/dist/Calendar.css';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
@@ -30,7 +31,7 @@ const NewPlace = () => {
   const [checkOut, setcheckOut] = useState(new Date());
   const [checkOutT, setcheckOutT] = useState('10:00');
   const [guests, setGuests] = useState('')
-  const [price, setPrice] = useState(1000)
+  const [price, setPrice] = useState('1000')
   const [extraInfo, setExtraInfo] = useState('')
 
   const [authMsg, setAuthMsg] = useState({
@@ -98,7 +99,7 @@ const NewPlace = () => {
 
   const submitPlace = async (e) => {
     e.preventDefault()
-    if (title.length < 3, address.length < 3, photos.length === 0, description.length < 3, amenities.length === 0, guests.length === 0, price.length === 0) {
+    if (title.length < 3 || address.length < 3 || photos.length === 0 || description.length < 3 || amenities.length === 0 || guests.length === 0 || price.length === 0) {
       setAuthMsg({
         status: 'Failed',
         message: 'All fields are required'
@@ -134,7 +135,7 @@ const NewPlace = () => {
         setcheckOutT('10:00')
         setGuests('')
         setExtraInfo('')
-        setPrice(100)
+        setPrice('1000')
         setRedirectTo(true)
       } else {
         setAuthMsg({
@@ -225,14 +226,14 @@ const NewPlace = () => {
           <div className='my-1.5'>
             <h4>Check In</h4>
             <div className='flex gap-5'>
-              <DatePicker selected={checkIn} onChange={(date) => setcheckIn(date)} />
+              <DatePicker value={checkIn} onChange={setcheckIn} />
               <TimePicker onChange={setcheckInT} value={checkInT} />
             </div>
           </div>
           <div className='my-1.5'>
             <h4>Check Out</h4>
             <div className='flex gap-5'>
-              <DatePicker selected={checkOut} onChange={(date) => setcheckOut(date)} />
+              <DatePicker value={checkOut} onChange={setcheckOut} />
               <TimePicker onChange={setcheckOutT} value={checkOutT} />
             </div>
           </div>
