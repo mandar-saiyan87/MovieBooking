@@ -76,8 +76,8 @@ class NewPlace:
         
 class NewBooking:
     def __init__(self, placeid, userid, fname, contact, amount, checkIn, checkOut, numofguests):
-        self.userid = userid
         self.placeid = placeid
+        self.userid = userid
         self.fname = fname
         self.contact = contact
         self.amount = amount
@@ -87,8 +87,8 @@ class NewBooking:
         
     def to_dict(self):
         return {
-            "usrid": self.userid,
             "placeid": self.placeid,
+            "usrid": self.userid,
             "fname": self.fname,
             "contact": self.contact,
             "amount": self.amount,

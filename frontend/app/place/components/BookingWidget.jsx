@@ -12,7 +12,7 @@ const BookingWidget = ({ place }) => {
 
   const user = userStore((state) => state.current_user)
   const token = Cookies.get('token')
-
+  const placeId = place._id
   const [bookcheckIn, setbookcheckIn] = useState('');
   const [bookcheckOut, setbookcheckOut] = useState('');
   const [bookGuests, setbookGuests] = useState('')
@@ -24,9 +24,11 @@ const BookingWidget = ({ place }) => {
   })
 
   let numberofnights = 0
+  let amount = 0
 
   if (bookcheckIn & bookcheckOut) {
     numberofnights = differenceInCalendarDays(bookcheckOut, bookcheckIn)
+    amount = place.price * numberofnights
   }
 
   const handleBooking = async (e) => {
@@ -56,7 +58,18 @@ const BookingWidget = ({ place }) => {
           })
         }, 4000);
       } else {
-        console.log('Booking in progress')
+        const req = await fetch('http://127.0.0.1:5000/api/bookings/newbooking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+           placeId, fname, contact, bookcheckIn, bookcheckOut, bookGuests, amount
+        })
+      })
+      const data = await req.json()
+      console.log(data)
       }
     }
   }
@@ -96,7 +109,7 @@ const BookingWidget = ({ place }) => {
             </div>
             <div className='px-4 py-3 text-sm font-medium'>
               <h3>Contact No.</h3>
-              <input type="text" className='w-full mt-1' placeholder='No. of guests' value={contact} onChange={e => setContact(e.target.value)} maxLength={10} />
+              <input type="text" className='w-full mt-1' placeholder='Contact No.' value={contact} onChange={e => setContact(e.target.value)} maxLength={10} />
             </div>
           </> : null
         }
