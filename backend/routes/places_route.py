@@ -52,8 +52,14 @@ def get_place_by_id(id):
     placeID = ObjectId(id)
     try:
         place = mongodb.places.find_one({'_id': placeID})
-
         if place:
+            bookings = mongodb.bookings.find({'placeid': id})
+            all_booking = []
+            for booking in bookings:
+                booking['_id'] = str(booking['_id'])
+                all_booking.append(booking)
+            if len(all_booking) > 0:
+                place['bookings'] = all_booking    
             place['_id'] = str(place['_id'])
             return {"status": 'Success', "msg": "Place found", "user_place": place}
         else:

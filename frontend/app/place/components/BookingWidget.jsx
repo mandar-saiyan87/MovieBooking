@@ -1,5 +1,6 @@
 'use client'
 import React, { useState } from 'react'
+import { redirect } from 'next/navigation'
 import DatePicker from 'react-date-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
@@ -13,6 +14,7 @@ const BookingWidget = ({ place }) => {
   const user = userStore((state) => state.current_user)
   const token = Cookies.get('token')
   const placeId = place._id
+  const [redirectTo, setRedirect] = useState(false)
   const [bookcheckIn, setbookcheckIn] = useState('');
   const [bookcheckOut, setbookcheckOut] = useState('');
   const [bookGuests, setbookGuests] = useState('')
@@ -59,24 +61,38 @@ const BookingWidget = ({ place }) => {
         }, 4000);
       } else {
         const req = await fetch('http://127.0.0.1:5000/api/bookings/newbooking', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-           placeId, fname, contact, bookcheckIn, bookcheckOut, bookGuests, amount
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            placeId, fname, contact, bookcheckIn, bookcheckOut, bookGuests, amount
+          })
         })
-      })
-      const data = await req.json()
-      console.log(data)
+        const data = await req.json()
+        console.log(data)
+        if (data.status === 'Success') {
+          setbookcheckIn('')
+          setbookcheckOut('')
+          setbookGuests('')
+          setFname('')
+          setContact('')
+          numberofnights = 0
+          amount = 0
+          setRedirect(true)
+        }
       }
     }
   }
 
+  if (redirectTo) {
+    redirect('/account/bookings')
+  }
+
   return (
     <div className='w-full bg-white rounded-xl shadow-md py-5 px-6 text-center'>
-      <h3 className='text-lg font-medium'>Price: ₹{place.price}/ per night</h3>
+      <h3 className='text-lg font-semibold'>Price: ₹{place.price}/ per night</h3>
       <div className='border-[1px] border-slate-300 rounded-xl my-2 text-start'>
         <div className='my-2 flex text-sm font-medium'>
           <div className='px-4 py-3 w-full'>

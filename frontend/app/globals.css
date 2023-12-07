@@ -2,9 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap');
+
 @layer base {
   body {
-    @apply m-auto bg-white overflow-x-hidden antialiased
+    @apply m-auto bg-white overflow-x-hidden antialiased font-inter
   }
 
   ::-webkit-scrollbar {
@@ -48,8 +50,7 @@
   }
 
 
-  .react-datepicker-wrapper
-  .react-datepicker__input-container {
+  .react-datepicker-wrapper .react-datepicker__input-container {
     @apply inline w-auto border-none
   }
 

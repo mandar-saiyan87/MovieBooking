@@ -9,7 +9,10 @@ module.exports = {
     extend: {
       colors: {
         'primary': '#ED2939'
-      }
+      },
+      fontFamily: {
+        'inter': ['Inter', 'sans-serif'],
+      },
     },
   },
   plugins: [],

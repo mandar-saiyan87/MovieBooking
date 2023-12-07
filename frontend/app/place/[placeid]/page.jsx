@@ -35,7 +35,7 @@ const Place = async ({ params }) => {
   return (
     <>
       <div className='max-w-[1536px] p-5 m-auto my-3 bg-slate-100'>
-        <h3 className='text-xl font-medium'>{user_place.title}</h3>
+        <h3 className='text-xl font-semibold'>{user_place.title}</h3>
         <Link href={`https://maps.google.com/?q=${user_place.address}`} target='_blank' className='flex gap-1 underline my-2'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -47,26 +47,26 @@ const Place = async ({ params }) => {
         <div className='grid grid-cols-1 my-4 md:grid-cols-[2fr_1fr] gap-8'>
           <div className=''>
             <div>
-              <h3 className='text-lg font-medium'>Description</h3>
+              <h3 className='text-lg font-semibold'>Description</h3>
               <p className='text-sm my-2' dangerouslySetInnerHTML={{ __html: user_place.description }}></p>
             </div>
-            <div className='my-6 text-sm font-medium'>
+            <div className='my-6 text-sm font-semibold'>
               <p>Check In: <span>{checkIn}, {checkInT}</span></p>
               <p>Check Out: <span>{checkOut}, {checkOutT}</span></p>
               <p>Max Guests: <span>{user_place.guests}</span></p>
             </div>
             <div className='text-sm my-6'>
-              <h3 className='text-lg font-medium'>Amenities</h3>
+              <h3 className='text-lg font-semibold'>Amenities</h3>
               <div className='grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 my-2 max-w-max'>
                 {user_place.amenities.map((amenity) => {
                   return (
-                    <div className='text-center border-[1px] border-slate-400 py-3 px-5 rounded-xl font-medium' key={amenity}>{amenity}</div>
+                    <div className='text-center border-[1px] border-slate-400 py-3 px-5 rounded-xl font-semibold' key={amenity}>{amenity}</div>
                   )
                 })}
               </div>
             </div>
             <div className='my-6'>
-              <h3 className='text-lg font-medium'>Extra Info</h3>
+              <h3 className='text-lg font-semibold'>Extra Info</h3>
               <p className='text-sm my-2' dangerouslySetInnerHTML={{ __html: user_place.extraInfo }}></p>
             </div>
           </div>
