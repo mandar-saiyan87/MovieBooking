@@ -20,7 +20,7 @@ def get_user():
     return userId
 
 
-@user_routes.route('/api/users', methods=['GET'])
+@user_routes.route('/api/test', methods=['GET'])
 def get_users():
     return {'success': 'test ok'}
 
