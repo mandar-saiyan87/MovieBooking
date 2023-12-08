@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, url_for
+from flask import Blueprint, request
 import requests
 from bson import ObjectId
 from db import mongodb

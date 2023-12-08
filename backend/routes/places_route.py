@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request, url_for
+from flask import Blueprint, request
 import requests
 from bson import ObjectId
 from db import mongodb
@@ -59,7 +59,7 @@ def get_place_by_id(id):
                 booking['_id'] = str(booking['_id'])
                 all_booking.append(booking)
             if len(all_booking) > 0:
-                place['bookings'] = all_booking    
+                place['bookings'] = all_booking
             place['_id'] = str(place['_id'])
             return {"status": 'Success', "msg": "Place found", "user_place": place}
         else:
