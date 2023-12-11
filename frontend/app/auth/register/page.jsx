@@ -57,7 +57,7 @@ const Register = () => {
       }, 4000)
     } else {
       try {
-        const req = await fetch('http://127.0.0.1:5000/api/users/register', {
+        const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/users/register`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
@@ -105,8 +105,8 @@ const Register = () => {
         <div className='text-center w-full max-w-lg mt-44'>
           <h2 className='text-2xl font-medium mb-2 tracking-wide'>Register</h2>
           <form className='w-full px-4 flex flex-col' onSubmit={submitForm} noValidate>
-            <input type="text" id='name' name='name' placeholder='John Doe' onChange={handleChange} value={newUser.name} className='my-3' />
-            <input type="email" id='email' name='email' placeholder='you@email.com' onChange={handleChange} value={newUser.email} className='my-3' />
+            <input type="text" id='name' name='name' placeholder='John Doe' onChange={handleChange} value={newUser.name} className='my-3 input_areas' />
+            <input type="email" id='email' name='email' placeholder='you@email.com' onChange={handleChange} value={newUser.email} className='my-3 input_areas' />
             <input type="password" id='password' name='password' placeholder='password' onChange={handleChange} value={newUser.password} className='my-3' />
             <button className='primary'>Register</button>
           </form>

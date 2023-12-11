@@ -60,7 +60,7 @@ const BookingWidget = ({ place }) => {
           })
         }, 4000);
       } else {
-        const req = await fetch('http://127.0.0.1:5000/api/bookings/newbooking', {
+        const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/bookings/newbooking`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -94,21 +94,25 @@ const BookingWidget = ({ place }) => {
     <div className='w-full bg-white rounded-xl shadow-md py-5 px-6 text-center'>
       <h3 className='text-lg font-semibold'>Price: ₹{place.price}/ per night</h3>
       <div className='border-[1px] border-slate-300 rounded-xl my-2 text-start'>
-        <div className='my-2 flex text-sm font-medium'>
-          <div className='px-4 py-3 w-full'>
+        <div className='my-2 flex text-sm font-medium justify-evenly'>
+          <div className='py-1 w-auto'>
             <h3 className='mb-1'>Check In:</h3>
-            <DatePicker
+            <input type="date" value={bookcheckIn} onChange={(e) => setbookcheckIn(e.target.value)} className='' />
+            {/* <DatePicker
               onChange={setbookcheckIn}
               value={bookcheckIn}
-            />
+              className='pickdate'
+            /> */}
           </div>
           <div className='border-l-[1px] border-slate-300' />
-          <div className='px-4 py-3 w-full'>
+          <div className='py-1 w-auto'>
             <h3 className='mb-1'>Check Out:</h3>
-            <DatePicker
+            <input type="date" value={bookcheckOut} onChange={(e) => setbookcheckOut(e.target.value)} className='' />
+            {/* <DatePicker
               onChange={setbookcheckOut}
               value={bookcheckOut}
-            />
+              className='pickdate'
+            /> */}
           </div>
         </div>
         <div className='w-full border-t-[1px] border-slate-300'></div>

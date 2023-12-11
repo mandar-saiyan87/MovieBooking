@@ -44,7 +44,7 @@ const Place = async ({ params }) => {
           {user_place.address}
         </Link>
         <ImageContainer photos={user_place.photos} title={user_place.title} />
-        <div className='grid grid-cols-1 my-4 md:grid-cols-[2fr_1fr] gap-8'>
+        <div className='grid grid-cols-1 my-4 md:grid-cols-2 lg:grid-cols-[2fr_1fr] gap-8'>
           <div className=''>
             <div>
               <h3 className='text-lg font-semibold'>Description</h3>

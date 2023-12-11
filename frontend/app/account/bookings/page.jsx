@@ -19,7 +19,7 @@ const Bookings = () => {
 
   const getBookings = async () => {
     if (currentUser && token) {
-      const req = await fetch('http://127.0.0.1:5000/api/bookings/userbookings', {
+      const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/bookings/userbookings`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -53,7 +53,7 @@ const Bookings = () => {
             {bookings.map((booking) => {
               return (
                 <div className='my-3 max-w-4xl m-auto flex bg-slate-300 rounded-lg'>
-                  <img src={booking.booked_place.photos[0].startsWith('/') ? `http://127.0.0.1:5000${booking.booked_place.photos[0]}` : booking.booked_place.photos[0]} alt={booking.booked_place.photos[0]} className='w-48 rounded-lg' />
+                  <img src={booking.booked_place.photos[0].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${booking.booked_place.photos[0]}` : booking.booked_place.photos[0]} alt={booking.booked_place.photos[0]} className='w-48 rounded-lg' />
                   <div className='w-full flex items-center justify-between py-3 px-5'>
                     <div className=''>
                       <h3 className='text-lg font-medium text-primary'>{booking.booked_place.title}</h3>

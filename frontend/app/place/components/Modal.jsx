@@ -21,7 +21,7 @@ const Modal = ({ images, onClose, title }) => {
           {images.map((image) => {
             return (
               <div className='w-full my-4 h-[800px]'>
-                <img src={image.startsWith('/') ? `http://127.0.0.1:5000${image}` : image} alt={image} className='w-full h-full object-fill' />
+                <img src={image.startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${image}` : image} alt={image} className='w-full h-full object-fill' />
               </div>
             )
           })}
