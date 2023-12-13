@@ -11,7 +11,7 @@ module.exports = {
         'primary': '#ED2939'
       },
       fontFamily: {
-        'inter': ['Inter', 'sans-serif'],
+        'poppins': ['Poppins', 'sans-serif'],
       },
     },
   },

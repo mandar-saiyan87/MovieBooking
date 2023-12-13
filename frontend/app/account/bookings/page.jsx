@@ -47,14 +47,14 @@ const Bookings = () => {
 
   return (
     <>
-      <div className='max-w-[1536px] h-full m-auto bg-white'>
+      <div className='max-w-[1536px] h-full m-auto bg-white px-3'>
         {bookings.length > 0 ?
           <div className=''>
             {bookings.map((booking) => {
               return (
-                <div className='my-3 max-w-4xl m-auto flex bg-slate-300 rounded-lg'>
-                  <img src={booking.booked_place.photos[0].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${booking.booked_place.photos[0]}` : booking.booked_place.photos[0]} alt={booking.booked_place.photos[0]} className='w-48 rounded-lg' />
-                  <div className='w-full flex items-center justify-between py-3 px-5'>
+                <div className='my-3 max-w-4xl m-auto flex flex-col bg-slate-300 rounded-lg shadow-md p-4 md:flex-row'>
+                  <img src={booking.booked_place.photos[0].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${booking.booked_place.photos[0]}` : booking.booked_place.photos[0]} alt={booking.booked_place.photos[0]} className='w-full rounded-lg md:w-48' />
+                  <div className='w-full flex flex-col items-center justify-between py-3 px-5 md:flex-row'>
                     <div className=''>
                       <h3 className='text-lg font-medium text-primary'>{booking.booked_place.title}</h3>
                       <p className='flex items-center gap-1 tracking-wide text-slate-600 font-semibold my-1'>
@@ -83,7 +83,7 @@ const Bookings = () => {
                       </div>
                     </div>
                     <div className='flex items-center justify-center'>
-                      <p className=' bg-primary text-white font-semibold py-5 px-9 tracking-wider rounded-lg'>₹ {booking.amount}</p>
+                      <p className=' bg-primary text-white font-semibold tracking-wider rounded-lg px-5 py-3 md:py-5 md:px-9'>₹ {booking.amount}</p>
                     </div>
                   </div>
                 </div>
