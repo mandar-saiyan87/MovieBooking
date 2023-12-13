@@ -36,10 +36,10 @@ const Modal = ({ images, onClose, title }) => {
             Close
           </button>
         </div>
-        <div className={`items-center overflow-y-scroll mt-4 ${screenSize.height < 400 ? 'h-[250px]' : screenSize.height < 550 ? 'h-[450px]' : screenSize.height < 700 ? 'h-[550px]' : screenSize.height < 750 ? 'h-[660px]' : 'h-[750px]'}`}>
+        <div className={`items-center overflow-y-scroll mt-4 md:px-20 ${screenSize.height < 400 ? 'h-[250px]' : screenSize.height < 550 ? 'h-[450px]' : screenSize.height < 700 ? 'h-[550px]' : screenSize.height < 750 ? 'h-[660px]' : 'h-[700px]'} ${screenSize.width < 800 && 'no-scrollbar'}`}>
           {images.map((image) => {
             return (
-              <div className='w-full my-4 min-h-[200px] max-h-[800px] px-2'>
+              <div className='w-full my-4 h-[200px] px-2 md:h-[650px]'>
                 <img src={image.startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${image}` : image} alt={image} className='w-full h-full object-fill' />
               </div>
             )

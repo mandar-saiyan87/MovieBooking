@@ -28,9 +28,11 @@ const EditPlace = () => {
   const [photoLink, setPhotoLink] = useState('')
   const [description, setDescription] = useState()
   const [amenities, setAmenities] = useState('')
-  const [checkIn, setcheckIn] = useState(new Date());
+  // const [checkIn, setcheckIn] = useState(new Date());
+  const [checkIn, setcheckIn] = useState('');
   const [checkInT, setcheckInT] = useState('10:00');
-  const [checkOut, setcheckOut] = useState(new Date());
+  // const [checkOut, setcheckOut] = useState(new Date());
+  const [checkOut, setcheckOut] = useState('');
   const [checkOutT, setcheckOutT] = useState('10:00');
   const [guests, setGuests] = useState('')
   const [price, setPrice] = useState('1000')
@@ -56,9 +58,11 @@ const EditPlace = () => {
           setPhotos(data.user_place.photos)
           setDescription(data.user_place.description)
           setAmenities(data.user_place.amenities)
-          setcheckIn(new Date(data.user_place.checkIn))
+          // setcheckIn(new Date(data.user_place.checkIn))
+          setcheckIn(data.user_place.checkIn)
           setcheckInT(data.user_place.checkInT)
-          setcheckOut(new Date(data.user_place.checkOut))
+          // setcheckOut(new Date(data.user_place.checkOut))
+          setcheckOut(data.user_place.checkOut)
           setcheckOutT(data.user_place.checkOutT)
           setGuests(data.user_place.guests)
           setPrice(data.user_place.price)
@@ -191,26 +195,26 @@ const EditPlace = () => {
   }
 
   return (
-    <div className='max-w-[1536px] m-auto bg-white py-6'>
+    <div className='max-w-[1536px] m-auto bg-white py-6 px-2'>
       <form onSubmit={submitPlace}>
         <div className='w-full my-2.5'>
           <h4>Title</h4>
-          <input type="text" className='w-[50%] my-1' placeholder='title, for example: My lovely apt' onChange={(e) => setTitle(e.target.value)} value={title} />
+          <input type="text" className='input_areas w-full my-1 md:w-[50%]' placeholder='title, for example: My lovely apt' onChange={(e) => setTitle(e.target.value)} value={title} />
         </div>
         <div className='w-full my-2.5'>
           <h4>Address</h4>
-          <input type="text" className='w-[50%]' placeholder='address to this place' onChange={(e) => setAddress(e.target.value)} value={address} />
+          <input type="text" className='input_areas w-full md:w-[50%]' placeholder='address to this place' onChange={(e) => setAddress(e.target.value)} value={address} />
         </div>
         <div className='w-full my-2.5'>
           <h4>Photos</h4>
           <div className='flex gap-2'>
-            <input type="text" className='w-[50%]' placeholder='Add using link' onChange={e => setPhotoLink(e.target.value)} value={photoLink} />
+            <input type="text" className='input_areas w-[70%] md:w-[50%]' placeholder='Add using link' onChange={e => setPhotoLink(e.target.value)} value={photoLink} />
             <button className='btnfunc' onClick={photoByLink}>Add Photo</button>
           </div>
           <div className='my-2.5 gap-3 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-max'>
             {photos.length > 0 && photos.map((photo, index) => {
               return (
-                <div className='relative flex group w-56 h-48 rounded-lg hover:bg-black' key={photo}>
+                <div className='relative flex group w-36 h-28 rounded-lg hover:bg-black md:w-56 md:h-48' key={photo}>
                   <Image src={photo.startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}/${photo}` : photo} width={900} height={900} key={index} className='w-full h-full rounded-lg group-hover:opacity-40' alt={indexedDB} />
                   <div className='hidden group-hover:block absolute bottom-1 left-[80%] p-1 rounded-full bg-slate-100/40 max-w-max text-red-600 cursor-pointer'>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7" onClick={() => deletephoto(photo)}>
@@ -230,7 +234,7 @@ const EditPlace = () => {
                 </div>
               )
             })}
-            <label className='flex items-center justify-center gap-1 border-2 rounded-xl w-56 h-48 cursor-pointer'>
+            <label className='flex items-center justify-center gap-1 border-2 rounded-xl w-36 h-28 cursor-pointer md:w-56 md:h-48'>
               <input type="file" className='hidden' onChange={uploadImg} />
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5" >
                 <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
@@ -253,25 +257,27 @@ const EditPlace = () => {
           <div className='my-1.5'>
             <h4>Check In</h4>
             <div className='flex gap-5'>
-              <DatePicker value={checkIn} onChange={setcheckIn} />
+              {/* <DatePicker value={checkIn} onChange={setcheckIn} /> */}
+              <input type='date' value={checkIn} onChange={setcheckIn} className='border-[1px] rounded-lg p-2' />
               <TimePicker onChange={setcheckInT} value={checkInT} />
             </div>
           </div>
           <div className='my-1.5'>
             <h4>Check Out</h4>
             <div className='flex gap-5'>
-              <DatePicker value={checkOut} onChange={setcheckOut} />
+              {/* <DatePicker value={checkOut} onChange={setcheckOut} /> */}
+              <input type='date' value={checkOut} onChange={setcheckOut} className='border-[1px] rounded-lg p-2' />
               <TimePicker onChange={setcheckOutT} value={checkOutT} />
             </div>
           </div>
         </div>
         <div className='w-full my-2.5'>
           <h4>Max Number of Guests</h4>
-          <input type="text" className='' placeholder='5' onChange={e => setGuests(e.target.value)} value={guests} />
+          <input type="text" className='input_areas' placeholder='5' onChange={e => setGuests(e.target.value)} value={guests} />
         </div>
         <div className='w-full my-2.5'>
           <h4>Price Per Night</h4>
-          <input type="text" className='' placeholder='5' onChange={e => setPrice(e.target.value)} value={price} />
+          <input type="text" className='input_areas' placeholder='5' onChange={e => setPrice(e.target.value)} value={price} />
         </div>
         <div className='w-full my-2.5'>
           <h4>Extra Info</h4>
