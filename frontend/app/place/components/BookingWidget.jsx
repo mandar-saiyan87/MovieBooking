@@ -1,9 +1,6 @@
 'use client'
 import React, { useState } from 'react'
 import { redirect } from 'next/navigation'
-import DatePicker from 'react-date-picker';
-import 'react-date-picker/dist/DatePicker.css';
-import 'react-calendar/dist/Calendar.css';
 import { differenceInCalendarDays } from 'date-fns'
 import userStore from '@/app/store/Store';
 import AuthMsg from '@/app/components/messages/AuthMsg';
@@ -28,8 +25,9 @@ const BookingWidget = ({ place }) => {
   let numberofnights = 0
   let amount = 0
 
-  if (bookcheckIn & bookcheckOut) {
-    numberofnights = differenceInCalendarDays(bookcheckOut, bookcheckIn)
+  if (bookcheckIn != '' & bookcheckOut != '') {
+    // console.log(`${bookcheckIn}\n${bookcheckOut}`)
+    numberofnights = differenceInCalendarDays(new Date(bookcheckOut), new Date(bookcheckIn))
     amount = place.price * numberofnights
   }
 
@@ -71,7 +69,7 @@ const BookingWidget = ({ place }) => {
           })
         })
         const data = await req.json()
-        console.log(data)
+        // console.log(data)
         if (data.status === 'Success') {
           setbookcheckIn('')
           setbookcheckOut('')
@@ -90,14 +88,18 @@ const BookingWidget = ({ place }) => {
     redirect('/account/bookings')
   }
 
+  const handledates = () => {
+    console.log(`${new Date(bookcheckOut)}\n${new Date(bookcheckIn)}\n${numberofnights}\n${amount}`)
+  }
+
   return (
     <div className='w-full bg-white rounded-xl shadow-md py-5 px-6 text-center'>
       <h3 className='text-lg font-semibold'>Price: ₹{place.price}/ per night</h3>
       <div className='border-[1px] border-slate-300 rounded-xl my-2 text-start'>
         <div className='my-2 flex text-sm font-medium justify-evenly'>
-          <div className='py-1 w-auto'>
+          <div className='py-1 px-2 w-full'>
             <h3 className='mb-1'>Check In:</h3>
-            <input type="date" value={bookcheckIn} onChange={(e) => setbookcheckIn(e.target.value)} className='' />
+            <input type="date" value={bookcheckIn} onChange={(e) => setbookcheckIn(e.target.value)} className='w-[90%]' />
             {/* <DatePicker
               onChange={setbookcheckIn}
               value={bookcheckIn}
@@ -105,9 +107,9 @@ const BookingWidget = ({ place }) => {
             /> */}
           </div>
           <div className='border-l-[1px] border-slate-300' />
-          <div className='py-1 w-auto'>
+          <div className='py-1 px-2 w-full'>
             <h3 className='mb-1'>Check Out:</h3>
-            <input type="date" value={bookcheckOut} onChange={(e) => setbookcheckOut(e.target.value)} className='' />
+            <input type="date" value={bookcheckOut} onChange={(e) => setbookcheckOut(e.target.value)} className='w-[90%]' />
             {/* <DatePicker
               onChange={setbookcheckOut}
               value={bookcheckOut}
@@ -118,23 +120,23 @@ const BookingWidget = ({ place }) => {
         <div className='w-full border-t-[1px] border-slate-300'></div>
         <div className='px-4 py-3 text-sm font-medium'>
           <h3>Number of Guests</h3>
-          <input type="text" className='w-full mt-1' placeholder='No. of guests' value={bookGuests} onChange={e => setbookGuests(e.target.value)} />
+          <input type="text" className='w-full mt-1 input_areas' placeholder='No. of guests' value={bookGuests} onChange={e => setbookGuests(e.target.value)} />
         </div>
         {numberofnights > 0 && bookGuests > 0 ?
           <>
             <div className='w-full border-t-[1px] border-slate-300'></div>
             <div className='px-4 py-3 text-sm font-medium'>
               <h3>Full Name</h3>
-              <input type="text" className='w-full mt-1' placeholder='No. of guests' value={fname} onChange={e => setFname(e.target.value)} />
+              <input type="text" className='w-full mt-1 input_areas' placeholder='Full Name' value={fname} onChange={e => setFname(e.target.value)} />
             </div>
             <div className='px-4 py-3 text-sm font-medium'>
               <h3>Contact No.</h3>
-              <input type="text" className='w-full mt-1' placeholder='Contact No.' value={contact} onChange={e => setContact(e.target.value)} maxLength={10} />
+              <input type="text" className='w-full mt-1 input_areas' placeholder='Contact No.' value={contact} onChange={e => setContact(e.target.value)} maxLength={10} />
             </div>
           </> : null
         }
       </div>
-      <button className='primary w-full' onClick={handleBooking}>
+      <button className='primary w-full' onClick={handledates}>
         Book Now
         {numberofnights > 0 && <span> @ ₹{numberofnights * place.price}</span>}
       </button>

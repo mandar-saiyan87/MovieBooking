@@ -19,7 +19,7 @@ const Profile = () => {
   })
 
   const userLogout = async () => {
-    const res = await fetch('http://127.0.0.1:5000/api/users/logout',
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/users/logout`,
       {
         method: 'POST',
       }
@@ -59,7 +59,7 @@ const Profile = () => {
       <div className='max-w-[1536px] m-auto bg-white'>
         <div className='max-w-2xl text-center m-auto'>
           <p>Logged is as ({current_user?.email})</p>
-          <button className='btnfunc my-5 w-full max-w-sm active:opacity-75' onClick={userLogout}>Logout</button>
+          <button className='btnfunc my-5 min-w-[150px] md:w-full max-w-sm active:opacity-75' onClick={userLogout}>Logout</button>
         </div>
       </div>
 

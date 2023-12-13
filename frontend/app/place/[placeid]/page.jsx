@@ -34,7 +34,7 @@ const Place = async ({ params }) => {
 
   return (
     <>
-      <div className='max-w-[1536px] p-5 m-auto my-3 bg-slate-100'>
+      <div className='max-w-[1536px] p-4 m-auto my-3 bg-slate-100 md:px-14 md:py-5'>
         <h3 className='text-xl font-semibold'>{user_place.title}</h3>
         <Link href={`https://maps.google.com/?q=${user_place.address}`} target='_blank' className='flex gap-1 underline my-2'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
@@ -60,7 +60,9 @@ const Place = async ({ params }) => {
               <div className='grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-5 my-2 max-w-max'>
                 {user_place.amenities.map((amenity) => {
                   return (
-                    <div className='text-center border-[1px] border-slate-400 py-3 px-5 rounded-xl font-semibold' key={amenity}>{amenity}</div>
+                    <div className='flex items-center justify-center text-center border-[1px] border-slate-400 p-3 rounded-xl font-semibold' key={amenity}>
+                      <p>{amenity}</p>
+                    </div>
                   )
                 })}
               </div>

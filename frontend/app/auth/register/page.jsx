@@ -107,7 +107,7 @@ const Register = () => {
           <form className='w-full px-4 flex flex-col' onSubmit={submitForm} noValidate>
             <input type="text" id='name' name='name' placeholder='John Doe' onChange={handleChange} value={newUser.name} className='my-3 input_areas' />
             <input type="email" id='email' name='email' placeholder='you@email.com' onChange={handleChange} value={newUser.email} className='my-3 input_areas' />
-            <input type="password" id='password' name='password' placeholder='password' onChange={handleChange} value={newUser.password} className='my-3' />
+            <input type="password" id='password' name='password' placeholder='password' onChange={handleChange} value={newUser.password} className='my-3 input_areas' />
             <button className='primary'>Register</button>
           </form>
           <p className='text-slate-400'>Already have an account? <Link href='/auth/login' className='underline text-primary'>Login</Link></p>

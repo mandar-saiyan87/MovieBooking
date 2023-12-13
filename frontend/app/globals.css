@@ -43,7 +43,20 @@
   }
 
   .btnfunc {
-    @apply bg-primary text-white rounded-full py-2 px-4 font-medium
+    @apply bg-primary text-white text-sm rounded-full py-1 px-3 font-medium md:py-2 md:px-4 md:text-base
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    scrollbar-width: none;
+    /* Firefox */
   }
 
 }

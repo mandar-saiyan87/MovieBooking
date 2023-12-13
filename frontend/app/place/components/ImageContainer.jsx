@@ -16,17 +16,17 @@ const ImageContainer = ({ photos, title }) => {
 
   return (
     <>
-      <div className='flex flex-col w-full oveflow-hidden gap-2 rounded-xl relative lg:flex-row lg:h-[600px] lg:gap-3'>
+      <div className='flex flex-col w-full oveflow-hidden gap-2 rounded-xl relative md:h-[650px] lg:flex-row lg:h-[550px] lg:gap-3'>
         <div className='w-full h-[65%] lg:w-[65%] rounded-xl overflow-hidden lg:h-full hover:bg-black cursor-pointer' onClick={() => setModal(true)}>
-          <img src={photos[0].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${photos[0]}` : photos[0]} alt={photos[0]} className='object-fill w-full h-full rounded-xl hover:opacity-80' />
+          <img src={photos[0].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${photos[0]}` : photos[0]} alt={photos[0]} className='aspect-square w-full h-full rounded-xl hover:opacity-80' />
         </div>
 
         <div className='w-full h-[35%] flex gap-2 rounded-xl overflow-hidden lg:w-[35%] lg:h-full lg:flex-col lg:gap-3'>
           <div className='w-1/2 h-full rounded-xl lg:w-full lg:h-1/2 hover:bg-black cursor-pointer' onClick={() => setModal(true)}>
-            <img src={photos[1].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${photos[1]}` : photos[0]} alt={photos[1]} className='object-fill w-full h-full rounded-xl hover:opacity-80' />
+            <img src={photos[1].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${photos[1]}` : photos[0]} alt={photos[1]} className='aspect-square w-full h-full rounded-xl hover:opacity-80' />
           </div>
           <div className='w-1/2 h-full rounded-xl lg:w-full lg:h-1/2 hover:bg-black cursor-pointer' onClick={() => setModal(true)}>
-            <img src={photos[2].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${photos[2]}` : photos[0]} alt={photos[2]} className='object-fill w-full h-full rounded-xl hover:opacity-80' />
+            <img src={photos[2].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${photos[2]}` : photos[0]} alt={photos[2]} className='aspect-square w-full h-full rounded-xl hover:opacity-80' />
           </div>
         </div>
         <button className='hidden lg:flex absolute right-2 bottom-2  gap-2 items-center bg-white border-[1px] border-black max-w-max font-medium p-2 rounded-lg' onClick={() => setModal(true)}>
