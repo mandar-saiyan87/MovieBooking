@@ -224,7 +224,7 @@ const NewPlace = () => {
             <h4>Check In</h4>
             <div className='flex gap-5'>
               {/* <DatePicker value={checkIn} onChange={setcheckIn} /> */}
-              <input type='date' value={checkIn} onChange={setcheckIn} className='border-[1px] rounded-lg p-2'/>
+              <input type='date' value={checkIn} onChange={(e) => setcheckIn(e.target.value)} className='border-[1px] rounded-lg p-2'/>
               <TimePicker onChange={setcheckInT} value={checkInT} />
             </div>
           </div>
@@ -232,7 +232,7 @@ const NewPlace = () => {
             <h4>Check Out</h4>
             <div className='flex gap-5'>
               {/* <DatePicker value={checkOut} onChange={setcheckOut} /> */}
-              <input type='date' value={checkOut} onChange={setcheckOut} className='border-[1px] rounded-lg p-2' />
+              <input type='date' value={checkOut} onChange={(e) => setcheckOut(e.target.value)} className='border-[1px] rounded-lg p-2' />
               <TimePicker onChange={setcheckOutT} value={checkOutT} />
             </div>
           </div>

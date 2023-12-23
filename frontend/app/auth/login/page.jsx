@@ -106,7 +106,7 @@ const Login = () => {
   }
 
   return (
-    <div className='w-full max-w-[1920px] h-screen bg-white m-auto'>
+    <div className='w-full max-w-[1920px] h-screen bg-white m-auto relative'>
       <div className='w-full h-full flex justify-center max-w-2xl m-auto'>
         <div className='text-center w-full max-w-lg mt-44'>
           <h2 className='text-2xl font-medium mb-2 tracking-wide'>Login</h2>
@@ -119,7 +119,7 @@ const Login = () => {
         </div>
       </div>
       {
-        authMsg.message != '' && <div className='w-max fixed left-[45%] top-24'>
+        authMsg.message != '' && <div className='w-max fixed left-0 top-24'>
           <AuthMsg status={authMsg.status} message={authMsg.message} />
         </div>
       }

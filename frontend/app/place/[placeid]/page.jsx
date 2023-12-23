@@ -5,7 +5,7 @@ import BookingWidget from '../components/BookingWidget'
 
 
 const getPlaceData = async (id) => {
-  const req = await fetch(`http://127.0.0.1:5000/api/places/getplace/${id}`, {
+  const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/places/getplace/${id}`, {
     method: 'GET'
   })
   const data = await req.json()
