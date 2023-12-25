@@ -9,6 +9,7 @@ const getPlaceData = async (id) => {
     method: 'GET'
   })
   const data = await req.json()
+  
   return data
 }
 
@@ -16,9 +17,10 @@ const getPlaceData = async (id) => {
 const Place = async ({ params }) => {
 
   const { user_place } = await getPlaceData(params.placeid)
+  console.log(user_place)
 
-  const checkIn = new Date(user_place.checkIn).toLocaleString('en-GB').split(',')[0]
-  const checkOut = new Date(user_place.checkOut).toLocaleString('en-GB').split(',')[0]
+  const checkIn = new Date(user_place?.checkIn).toLocaleString('en-GB').split(',')[0]
+  const checkOut = new Date(user_place?.checkOut).toLocaleString('en-GB').split(',')[0]
   const checkInT = new Date(`2000-01-01T${user_place.checkInT}:00`).toLocaleTimeString('en-US', {
     hour: 'numeric',
     minute: 'numeric',
