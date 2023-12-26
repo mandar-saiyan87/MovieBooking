@@ -17,7 +17,6 @@ const getPlaceData = async (id) => {
 const Place = async ({ params }) => {
 
   const { user_place } = await getPlaceData(params.placeid)
-  console.log(user_place)
 
   const checkIn = new Date(user_place?.checkIn).toLocaleString('en-GB').split(',')[0]
   const checkOut = new Date(user_place?.checkOut).toLocaleString('en-GB').split(',')[0]

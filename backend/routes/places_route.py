@@ -9,6 +9,11 @@ from flask_jwt_extended import jwt_required
 places_routes = Blueprint('/api/places', __name__)
 
 
+@places_routes.route('/api/places/test', methods=['GET'])
+def test_api():
+    return {"status": 200, "msg": "All Good"}
+
+
 @places_routes.route('/api/places/getplaces', methods=['GET'])
 def get_all_places():
     try:
