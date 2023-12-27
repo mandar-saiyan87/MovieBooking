@@ -50,5 +50,7 @@ def get_user_bookings():
         # print(booking_details)
         if len(booking_details) > 0:
             return {'status': 'Success', 'msg': 'Booking found', 'bookings': booking_details}
+        else:
+            return {"status": "Failed", "msg": "Booking not added", 'bookings': []}
     except Exception as e:
         return {'status': 'Failed', 'msg': 'Something went wrong', 'error': str(e)}
