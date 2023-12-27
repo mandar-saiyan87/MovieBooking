@@ -13,6 +13,7 @@ class DBConfig:
 
 class AppConfig:
     DEBUG = True
+    CORS_HEADERS = 'Content-Type'
     SECRET_KEY = os.getenv('SECRET_KEY')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=9)
@@ -73,7 +74,8 @@ class NewPlace:
             "price": self.price,
             "extraInfo": self.extraInfo
         }
-        
+
+
 class NewBooking:
     def __init__(self, placeid, userid, fname, contact, amount, checkIn, checkOut, numofguests):
         self.placeid = placeid
@@ -84,7 +86,7 @@ class NewBooking:
         self.checkIn = checkIn
         self.checkOut = checkOut
         self.numofguests = numofguests
-        
+
     def to_dict(self):
         return {
             "placeid": self.placeid,

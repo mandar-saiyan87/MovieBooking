@@ -2,6 +2,7 @@ import os
 from flask import Blueprint, request, url_for, session
 from bson import ObjectId
 import requests
+from flask_cors import cross_origin
 from db import mongodb
 from config import NewUser, AppConfig, allowed_file, NewPlace
 from flask_bcrypt import check_password_hash
@@ -25,6 +26,7 @@ def get_users():
 
 
 @user_routes.route('/api/users/register', methods=['POST'])
+@cross_origin()
 def register_user():
     userData = request.json
     newUser = NewUser(userData).to_dict()
@@ -44,6 +46,7 @@ def register_user():
 
 
 @user_routes.route('/api/users/login', methods=['POST'])
+@cross_origin()
 def login():
     loginData = request.json
     try:
