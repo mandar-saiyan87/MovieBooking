@@ -22,12 +22,14 @@ def new_booking():
         booking['amount'], booking['bookcheckIn'], booking['bookcheckOut'], booking['bookGuests']
     ).to_dict()
     try:
-        place = mongodb.places.find_one({'_id': placeId})
+        # place = mongodb.places.find_one({'_id': placeId})
         result = mongodb.bookings.insert_one(booking_new)
         if result.acknowledged:
-            return {"status": "Success", "msg": "New booking added successfully", "id": booking_new['_id']}
+            print(booking_new['_id'])
+            return {"status": "Success", "msg": "New booking added successfully", "id": str(booking_new['_id'])}
         else:
             return {"status": "Failed", "msg": "Booking not added"}
+    # return {"status": "In progress", "msg": "In progress"}
     except Exception as e:
         return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
 
@@ -43,8 +45,10 @@ def get_user_bookings():
         for booking in bookings:
             booking['_id'] = str(booking['_id'])
             place_id = ObjectId(booking['placeid'])
+            # Get place from booking using placeid
             place = mongodb.places.find_one({'_id': place_id})
             place['_id'] = str(place['_id'])
+            # Add place to respective booking details
             booking['booked_place'] = place
             booking_details.append(booking)
         # print(booking_details)

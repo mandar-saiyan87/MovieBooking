@@ -24,7 +24,6 @@ def get_users():
 
 
 @user_routes.route('/api/users/register', methods=['POST'])
-@cross_origin()
 def register_user():
     userData = request.json
     newUser = NewUser(userData).to_dict()

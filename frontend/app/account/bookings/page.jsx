@@ -52,7 +52,7 @@ const Bookings = () => {
           <div className=''>
             {bookings.map((booking) => {
               return (
-                <div className='my-3 max-w-4xl m-auto flex flex-col bg-slate-300 rounded-lg shadow-md p-4 md:flex-row'>
+                <div className='my-3 max-w-4xl m-auto flex flex-col bg-slate-300 rounded-lg shadow-md p-4 md:flex-row' key={booking._id}>
                   <img src={booking.booked_place.photos[0].startsWith('/') ? `${process.env.NEXT_PUBLIC_API_SRV}${booking.booked_place.photos[0]}` : booking.booked_place.photos[0]} alt={booking.booked_place.photos[0]} className='w-full rounded-lg md:w-48' />
                   <div className='w-full flex flex-col items-center justify-between py-3 px-5 md:flex-row'>
                     <div className=''>

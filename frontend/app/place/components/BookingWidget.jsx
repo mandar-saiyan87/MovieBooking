@@ -69,7 +69,7 @@ const BookingWidget = ({ place }) => {
           })
         })
         const data = await req.json()
-        // console.log(data)
+        console.log(data)
         if (data.status === 'Success') {
           setbookcheckIn('')
           setbookcheckOut('')
@@ -88,9 +88,9 @@ const BookingWidget = ({ place }) => {
     redirect('/account/bookings')
   }
 
-  const handledates = () => {
-    console.log(`${new Date(bookcheckOut)}\n${new Date(bookcheckIn)}\n${numberofnights}\n${amount}`)
-  }
+  // const handledates = () => {
+  //   console.log(`${new Date(bookcheckOut)}\n${new Date(bookcheckIn)}\n${numberofnights}\n${amount}`)
+  // }
 
   return (
     <div className='w-full bg-white rounded-xl shadow-md py-5 px-6 text-center'>
@@ -136,7 +136,7 @@ const BookingWidget = ({ place }) => {
           </> : null
         }
       </div>
-      <button className='primary w-full' onClick={handledates}>
+      <button className='primary w-full' onClick={handleBooking}>
         Book Now
         {numberofnights > 0 && <span> @ ₹{numberofnights * place.price}</span>}
       </button>
