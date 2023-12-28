@@ -17,4 +17,4 @@ app.register_blueprint(booking_routes)
 
 
 if __name__ == '__main__':
-    app.run(host='192.168.0.100')
+    app.run()

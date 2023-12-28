@@ -13,7 +13,6 @@ class DBConfig:
 
 class AppConfig:
     DEBUG = True
-    CORS_HEADERS = 'Content-Type'
     SECRET_KEY = os.getenv('SECRET_KEY')
     JWT_SECRET_KEY = os.getenv('JWT_SECRET_KEY')
     JWT_ACCESS_TOKEN_EXPIRES = timedelta(hours=9)
