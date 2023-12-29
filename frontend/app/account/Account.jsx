@@ -14,7 +14,7 @@ const Account = () => {
 
   useEffect(() => {
     setTab(currentPath)
-  })
+  }, [currentPath])
 
   const currentUser = userStore((state) => state.current_user)
 
