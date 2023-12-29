@@ -7,16 +7,6 @@ const ImageContainer = ({ photos, title }) => {
 
   const [showModal, setModal] = useState(false)
 
-  // if (showModal) {
-  //   if (typeof window !== 'undefined') { 
-  //     document.body.style.overflow = 'hidden'
-  //   }
-  // } else {
-  //   if (typeof window !== 'undefined') { 
-  //     document.body.style.overflow = 'unset'
-  //   }
-  // }
-
 
   useEffect(() => {
     if (showModal) {
@@ -76,3 +66,13 @@ export default ImageContainer
 //         Show all photos
 //       </button>
 //     </div >
+
+// if (showModal) {
+//   if (typeof window !== 'undefined') {
+//     document.body.style.overflow = 'hidden'
+//   }
+// } else {
+//   if (typeof window !== 'undefined') {
+//     document.body.style.overflow = 'unset'
+//   }
+// }
