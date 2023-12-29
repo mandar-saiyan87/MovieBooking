@@ -11,6 +11,7 @@ venv
 
 # next.js
 /.next/
+.next
 /out/
 
 # production
