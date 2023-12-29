@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Modal from './Modal'
 
 
@@ -7,15 +7,24 @@ const ImageContainer = ({ photos, title }) => {
 
   const [showModal, setModal] = useState(false)
 
-  if (showModal) {
-    if (typeof window !== 'undefined') { 
+  // if (showModal) {
+  //   if (typeof window !== 'undefined') { 
+  //     document.body.style.overflow = 'hidden'
+  //   }
+  // } else {
+  //   if (typeof window !== 'undefined') { 
+  //     document.body.style.overflow = 'unset'
+  //   }
+  // }
+
+
+  useEffect(() => {
+    if (showModal) {
       document.body.style.overflow = 'hidden'
-    }
-  } else {
-    if (typeof window !== 'undefined') { 
+    } else {
       document.body.style.overflow = 'unset'
     }
-  }
+  }, [showModal])
 
 
 
