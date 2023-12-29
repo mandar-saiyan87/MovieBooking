@@ -5,7 +5,7 @@ import Image from 'next/image';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import Amenities from '../../components/Amenities';
+import Amenities from '../../../components/account_components/Amenities';
 import AuthMsg from '../../../components/messages/AuthMsg';
 import Cookies from 'js-cookie';
 import ReactQuill from 'react-quill';
@@ -115,7 +115,7 @@ const NewPlace = () => {
           'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
-          title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests,price, extraInfo
+          title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, price, extraInfo
         })
       })
       const data = await req.json()
@@ -224,7 +224,7 @@ const NewPlace = () => {
             <h4>Check In</h4>
             <div className='flex gap-5'>
               {/* <DatePicker value={checkIn} onChange={setcheckIn} /> */}
-              <input type='date' value={checkIn} onChange={(e) => setcheckIn(e.target.value)} className='border-[1px] rounded-lg p-2'/>
+              <input type='date' value={checkIn} onChange={(e) => setcheckIn(e.target.value)} className='border-[1px] rounded-lg p-2' />
               <TimePicker onChange={setcheckInT} value={checkInT} />
             </div>
           </div>

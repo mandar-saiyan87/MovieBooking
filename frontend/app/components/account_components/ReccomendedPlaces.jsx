@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import Cookies from 'js-cookie'
-import Spinner from '../../components/Spinner'
+import Spinner from '../Spinner'
 
 const ReccomendedPlaces = () => {
 
