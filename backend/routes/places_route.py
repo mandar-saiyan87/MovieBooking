@@ -29,7 +29,7 @@ def get_all_places():
         else:
             return {"status": "Failed", "msg": "No places found", "user_places": []}
     except Exception as e:
-        return {"status": 'Failed', "msg": "Somthing went wrong"}
+        return {"status": 'Failed', "msg": "Somthing went wrong", "error": str(e)}
 
 
 @places_routes.route('/api/places/placebyuser', methods=['GET'])
