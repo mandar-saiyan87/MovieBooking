@@ -8,10 +8,15 @@ const ImageContainer = ({ photos, title }) => {
   const [showModal, setModal] = useState(false)
 
   if (showModal) {
-    document.body.style.overflow = 'hidden'
+    if (typeof window !== 'undefined') { 
+      document.body.style.overflow = 'hidden'
+    }
   } else {
-    document.body.style.overflow = 'unset'
+    if (typeof window !== 'undefined') { 
+      document.body.style.overflow = 'unset'
+    }
   }
+
 
 
   return (
