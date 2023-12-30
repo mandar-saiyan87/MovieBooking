@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { redirect } from 'next/navigation'
 import { differenceInCalendarDays } from 'date-fns'
 import userStore from '@/app/store/Store';
-import AuthMsg from '@/app/components/messages/AuthMsg';
+import AuthMsg from '@/components/messages/AuthMsg';
 import Cookies from 'js-cookie';
 
 const BookingWidget = ({ place }) => {

@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import validator from 'validator';
 import Cookies from 'js-cookie';
-import AuthMsg from '../../components/messages/AuthMsg';
+import AuthMsg from '../../../components/messages/AuthMsg';
 import userStore from '../../store/Store'
 
 const Login = () => {

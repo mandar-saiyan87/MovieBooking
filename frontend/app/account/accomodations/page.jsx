@@ -3,7 +3,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import userStore from '@/app/store/Store'
-import ReccomendedPlaces from '../../components/account_components/ReccomendedPlaces'
+import ReccomendedPlaces from '../../../components/account_components/ReccomendedPlaces'
 
 
 const Accomodations = () => {

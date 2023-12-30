@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
 import userStore from '../../store/Store';
 import Cookies from 'js-cookie';
-import AuthMsg from '../../components/messages/AuthMsg';
+import AuthMsg from '../../../components/messages/AuthMsg';
 
 const Profile = () => {
 

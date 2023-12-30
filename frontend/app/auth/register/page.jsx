@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import validator from 'validator';
-import AuthMsg from '../../components/messages/AuthMsg';
+import AuthMsg from '../../../components/messages/AuthMsg';
 
 const Register = () => {
 
