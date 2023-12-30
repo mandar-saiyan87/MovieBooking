@@ -1,15 +1,14 @@
 import React from 'react'
 import Link from 'next/link'
-import ImageContainer from '../components/ImageContainer'
-import BookingWidget from '../components/BookingWidget'
-
+import ImageContainer from '@/app/components/place_components/ImageContainer'
+import BookingWidget from '@/app/components/place_components/BookingWidget'
 
 const getPlaceData = async (id) => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/places/getplace/${id}`, {
     method: 'GET'
   })
   const data = await req.json()
-  
+
   return data
 }
 
