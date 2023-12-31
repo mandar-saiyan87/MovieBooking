@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { redirect } from 'next/navigation'
 import Image from 'next/image';
 import TimePicker from 'react-time-picker';
@@ -38,6 +38,12 @@ const NewPlace = () => {
 
 
   const token = Cookies.get('token')
+
+  useEffect(() => {
+    if (redirectTo) {
+      redirect('/account/accomodations')
+    }
+  }, [redirectTo])
 
   const photoByLink = (e) => {
     e.preventDefault()
@@ -156,9 +162,7 @@ const NewPlace = () => {
     setPhotos(newPhotos)
   }
 
-  if (redirectTo) {
-    redirect('/account/accomodations')
-  }
+
 
   return (
     <div className='max-w-[1536px] m-auto bg-white py-6 px-2'>

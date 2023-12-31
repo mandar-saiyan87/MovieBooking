@@ -1,26 +1,26 @@
 'use client'
 import React, { useState, useEffect } from 'react'
-import { useRouter, usePathname } from 'next/navigation'
-import userStore from '../store/Store'
+import { useRouter, usePathname, redirect } from 'next/navigation'
+import userStore from '../../app/store/Store'
 import Link from 'next/link'
 
 const Account = () => {
 
 
   const [tab, setTab] = useState('/account/profile')
-  const router = useRouter()
-
+  const currentUser = userStore((state) => state.current_user)
   const currentPath = usePathname()
+
+  useEffect(() => {
+    if (currentUser === null) {
+      redirect('/auth/login')
+    }
+
+  })
 
   useEffect(() => {
     setTab(currentPath)
   }, [currentPath])
-
-  const currentUser = userStore((state) => state.current_user)
-
-  if (currentUser === null) {
-    router.push('/auth/login')
-  }
 
 
   return (

@@ -1,6 +1,6 @@
 'use client'
-import React, { useState } from 'react'
-import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
+import { useRouter, redirect } from 'next/navigation';
 import userStore from '../../store/Store';
 import Cookies from 'js-cookie';
 import AuthMsg from '../../../components/messages/AuthMsg';
@@ -17,6 +17,21 @@ const Profile = () => {
     status: '',
     message: ''
   })
+
+  useEffect(() => {
+    if (current_user === null) {
+      redirect('/auth/login')
+    }
+  })
+
+  useEffect(() => {
+    if (redirectTo) {
+      router.push('/')
+      setTimeout(() => {
+        setCurrent(null)
+      }, [400])
+    }
+  }, [redirectTo])
 
   const userLogout = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/users/logout`,
@@ -42,14 +57,6 @@ const Profile = () => {
         })
       }, 4000);
     }
-
-  }
-
-  if (redirectTo) {
-    router.push('/')
-    setTimeout(() => {
-      setCurrent(null)
-    }, [400])
 
   }
 

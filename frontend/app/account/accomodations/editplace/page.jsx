@@ -2,8 +2,6 @@
 import React, { useState, useEffect } from 'react'
 import { redirect, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
-import DatePicker from 'react-date-picker';
-import 'react-date-picker/dist/DatePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
@@ -45,13 +43,20 @@ const EditPlace = () => {
 
 
   const token = Cookies.get('token')
+
+
+  useEffect(() => {
+    if (redirectTo) {
+      redirect('/account/accomodations')
+    }
+  }, [redirectTo])
+
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/places/getplace/${placeId}`, {
       method: 'GET',
 
     }).then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data.status === 'Success') {
           setTitle(data.user_place.title)
           setAddress(data.user_place.address)
@@ -105,12 +110,10 @@ const EditPlace = () => {
 
   const deletephoto = async (imgpath) => {
     // console.log(imgpath)
-    if (imgpath.startsWith('https') || imgpath.startsWith('http')) {
-      const newPhotos = photos.filter(photo => photo !== imgpath)
-      setPhotos(newPhotos)
-      console.log(newPhotos)
-    }
-    else {
+    const newPhotos = photos.filter(photo => photo !== imgpath)
+    setPhotos(newPhotos)
+    console.log(newPhotos)
+    if (imgpath.startsWith('/')) {
       const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/users/deletephoto`, {
         method: 'POST',
         headers: {
@@ -119,12 +122,8 @@ const EditPlace = () => {
         },
         body: JSON.stringify({ imgpath, title })
       })
-      const result = await req.json()
+      // const result = await req.json()
       // console.log(result)
-      if (result.status === 'Success') {
-        const newPhotos = Array.from(new Set([...photos, ...result.userImages]))
-        setPhotos(newPhotos)
-      }
     }
   }
 
@@ -190,9 +189,7 @@ const EditPlace = () => {
     setPhotos(newPhotos)
   }
 
-  if (redirectTo) {
-    redirect('/account/accomodations')
-  }
+
 
   return (
     <div className='max-w-[1536px] m-auto bg-white py-6 px-2'>

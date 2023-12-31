@@ -1,21 +1,24 @@
 'use client'
-import React, { useState, useLayoutEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import React, { useState, useEffect } from 'react'
+import { redirect } from 'next/navigation'
 import userStore from '@/app/store/Store'
 import Cookies from 'js-cookie';
 import { format, differenceInCalendarDays } from 'date-fns'
 
 const Bookings = () => {
 
-  const router = useRouter()
+  // const router = useRouter()
   const currentUser = userStore((state) => state.current_user)
   const token = Cookies.get('token')
 
   const [bookings, setBookings] = useState([])
 
-  if (currentUser === null) {
-    router.push('/auth/login')
-  }
+  useEffect(() => {
+    if (currentUser === null) {
+      redirect('/auth/login')
+    }
+  })
+
 
   const getBookings = async () => {
     if (currentUser && token) {
@@ -41,9 +44,9 @@ const Bookings = () => {
     }
   }
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getBookings()
-  }, [])
+  })
 
   return (
     <>

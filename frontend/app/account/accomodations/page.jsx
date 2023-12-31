@@ -1,23 +1,25 @@
 'use client'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
 import userStore from '@/app/store/Store'
 import ReccomendedPlaces from '../../../components/account_components/ReccomendedPlaces'
 
 
 const Accomodations = () => {
 
-  const router = useRouter()
+  // const router = useRouter()
   const currentUser = userStore((state) => state.current_user)
 
-  if (currentUser === null) {
-    router.push('/auth/login')
-  }
+  useEffect(() => {
+    if (currentUser === null) {
+      redirect('/auth/login')
+    }
+  })
+
 
   return (
     <>
-
       <div className='max-w-[1536px] h-full bg-white text-center m-auto'>
         <Link href='/account/accomodations/newplace' className='btnfunc active:opacity-70'>+ Add New Place</Link>
         <ReccomendedPlaces />
