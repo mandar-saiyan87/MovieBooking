@@ -4,9 +4,11 @@ import { redirect } from 'next/navigation'
 import userStore from '@/app/store/Store'
 import Cookies from 'js-cookie';
 import { format, differenceInCalendarDays } from 'date-fns'
+import Spinner from '@/components/Spinner';
 
 const Bookings = () => {
 
+  const [spinner, setSpinner] = useState(true)
   const currentUser = userStore((state) => state.current_user)
   const token = Cookies.get('token')
 
@@ -38,6 +40,8 @@ const Bookings = () => {
         }
       } catch (error) {
         console.log(error)
+      } finally { 
+        setSpinner(false)
       }
 
     }
@@ -50,7 +54,8 @@ const Bookings = () => {
   return (
     <>
       <div className='max-w-[1536px] h-full m-auto bg-white px-3'>
-        {bookings.length > 0 ?
+        {spinner ? <Spinner /> :
+          bookings.length > 0 ?
           <div className=''>
             {bookings.map((booking) => {
               return (
