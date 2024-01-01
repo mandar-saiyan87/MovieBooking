@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { useRouter, redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import userStore from '../../store/Store';
 import Cookies from 'js-cookie';
 import AuthMsg from '../../../components/messages/AuthMsg';
@@ -18,11 +18,11 @@ const Profile = () => {
     message: ''
   })
 
-  useEffect(() => {
-    if (current_user === null) {
-      redirect('/auth/login')
-    }
-  })
+  // useLayoutEffect(() => {
+  //   if (current_user === null) {
+  //     redirect('/auth/login')
+  //   }
+  // })
 
   useEffect(() => {
     if (redirectTo) {

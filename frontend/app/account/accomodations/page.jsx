@@ -8,14 +8,13 @@ import ReccomendedPlaces from '../../../components/account_components/Reccomende
 
 const Accomodations = () => {
 
-  // const router = useRouter()
   const currentUser = userStore((state) => state.current_user)
 
-  useEffect(() => {
-    if (currentUser === null) {
-      redirect('/auth/login')
-    }
-  })
+  // useEffect(() => {
+  //   if (currentUser === null) {
+  //     redirect('/auth/login')
+  //   }
+  // })
 
 
   return (

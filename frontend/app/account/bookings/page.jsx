@@ -7,17 +7,16 @@ import { format, differenceInCalendarDays } from 'date-fns'
 
 const Bookings = () => {
 
-  // const router = useRouter()
   const currentUser = userStore((state) => state.current_user)
   const token = Cookies.get('token')
 
   const [bookings, setBookings] = useState([])
 
-  useEffect(() => {
-    if (currentUser === null) {
-      redirect('/auth/login')
-    }
-  })
+  // useLayoutEffect(() => {
+  //   if (currentUser === null) {
+  //     redirect('/auth/login')
+  //   }
+  // })
 
 
   const getBookings = async () => {

@@ -1,5 +1,6 @@
 'use client'
 import React, { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { redirect, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
 import 'react-calendar/dist/Calendar.css';
@@ -9,8 +10,12 @@ import 'react-clock/dist/Clock.css';
 import Amenities from '../../../../components/account_components/Amenities';
 import AuthMsg from '../../../../components/messages/AuthMsg';
 import Cookies from 'js-cookie';
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+
+
+const ReactQuill = dynamic(() => {
+  return import('../../../../components/account_components/ReactQuillEditor');
+}, { ssr: false })
+
 
 const EditPlace = () => {
 
@@ -243,7 +248,8 @@ const EditPlace = () => {
         </div>
         <div className='w-full my-2.5'>
           <h4>Description</h4>
-          <ReactQuill theme="snow" value={description} onChange={setDescription} className='max-w-3xl' />
+          <ReactQuill text={description} changeText={setDescription} />
+          {/* <ReactQuill theme="snow" value={description} onChange={setDescription} className='max-w-3xl' /> */}
           {/* <textarea rows={3} cols={50} placeholder='Description' onChange={e => setDescription(e.target.value)} value={description} /> */}
         </div>
         <div className='w-full my-2.5'>
