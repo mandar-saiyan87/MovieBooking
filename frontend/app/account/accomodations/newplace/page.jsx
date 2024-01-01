@@ -76,6 +76,9 @@ const NewPlace = () => {
       const newPhotos = Array.from(new Set([...photos, ...result.userImages]))
       setPhotos(newPhotos)
     }
+    else if (result.status === 'Error') {
+      console.log(result.error)
+    }
   }
 
   const deletephoto = async (imgpath) => {

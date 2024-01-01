@@ -129,7 +129,7 @@ def upload_device_photo():
         else:
             return {"status": 'Failed', "msg": "Couln't save the photo"}
     except Exception as e:
-        return {"status": 'Failed', "msg": "Something went wrong please try again", "error": str(e)}
+        return {"status": 'Error', "msg": "Something went wrong please try again", "error": str(e)}
 
 
 @user_routes.route('/api/users/deletephoto', methods=['POST'])
