@@ -259,7 +259,8 @@ const NewPlace = () => {
         </div>
         <div className='w-full my-2.5'>
           <h4>Extra Info</h4>
-          <ReactQuill theme="snow" value={extraInfo} onChange={setExtraInfo} className='max-w-3xl' />
+          <ReactQuill text={extraInfo} changeText={setExtraInfo} />
+          {/* <ReactQuill theme="snow" value={extraInfo} onChange={setExtraInfo} className='max-w-3xl' /> */}
           {/* <textarea rows={3} cols={50} placeholder='House rules, etc...' onChange={e => setExtraInfo(e.target.value)} value={extraInfo} /> */}
         </div>
         <button className='btnfunc'>Save</button>
