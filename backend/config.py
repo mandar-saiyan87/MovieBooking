@@ -3,6 +3,7 @@ from flask_bcrypt import generate_password_hash
 from flask_jwt_extended import JWTManager
 from dotenv import load_dotenv
 import os
+import re
 
 db_passwd = os.getenv('MONGO_PASSWORD')
 
@@ -97,3 +98,13 @@ class NewBooking:
             "checkOut": self.checkOut,
             "numofguests": self.numofguests,
         }
+
+
+def replace_special(input_string):
+    # Define a regular expression pattern to match special characters
+    pattern = re.compile('[^a-zA-Z0-9_]+')
+
+    # Use the sub() function to replace matches with underscores
+    result_string = pattern.sub(' ', input_string)
+
+    return result_string

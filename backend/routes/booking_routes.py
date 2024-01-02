@@ -31,7 +31,7 @@ def new_booking():
             return {"status": "Failed", "msg": "Booking not added"}
     # return {"status": "In progress", "msg": "In progress"}
     except Exception as e:
-        return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
+        return {"status": "Error", "msg": "Someting went wrong, please try again later!", "error": str(e)}
 
 
 @booking_routes.route('/api/bookings/userbookings', methods=['GET'])
@@ -57,4 +57,4 @@ def get_user_bookings():
         else:
             return {"status": "Failed", "msg": "Booking not added", 'bookings': []}
     except Exception as e:
-        return {'status': 'Failed', 'msg': 'Something went wrong', 'error': str(e)}
+        return {'status': 'Error', 'msg': 'Something went wrong', 'error': str(e)}

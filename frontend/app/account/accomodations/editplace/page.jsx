@@ -194,10 +194,37 @@ const EditPlace = () => {
     setPhotos(newPhotos)
   }
 
+  const deletePlace = async (e) => {
+    e.preventDefault()
+    const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/places/deleteplace/${placeId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+    const resp = await req.json()
+    if (resp.status === 'Success') {
+      setRedirectTo(true)
+    } else {
+      setAuthMsg({
+        status: 'Failed',
+        message: resp.msg
+      })
+      setTimeout(() => {
+        setAuthMsg({
+          status: '',
+          message: ''
+        })
+      }, 4000);
+    }
+  }
+
 
 
   return (
     <div className='max-w-[1536px] m-auto bg-white py-6 px-2'>
+      <button className='btnfunc mb-7' onClick={deletePlace}>Delete</button>
       <form onSubmit={submitPlace}>
         <div className='w-full my-2.5'>
           <h4>Title</h4>
@@ -249,8 +276,7 @@ const EditPlace = () => {
         <div className='w-full my-2.5'>
           <h4>Description</h4>
           <ReactQuill text={description} changeText={setDescription} />
-          {/* <ReactQuill theme="snow" value={description} onChange={setDescription} className='max-w-3xl' /> */}
-          {/* <textarea rows={3} cols={50} placeholder='Description' onChange={e => setDescription(e.target.value)} value={description} /> */}
+
         </div>
         <div className='w-full my-2.5'>
           <h4>Amenities</h4>
@@ -260,7 +286,7 @@ const EditPlace = () => {
           <div className='my-1.5'>
             <h4>Check In</h4>
             <div className='flex gap-5'>
-              {/* <DatePicker value={checkIn} onChange={setcheckIn} /> */}
+
               <input type='date' value={checkIn} onChange={setcheckIn} className='border-[1px] rounded-lg p-2' />
               <TimePicker onChange={setcheckInT} value={checkInT} />
             </div>
@@ -268,7 +294,7 @@ const EditPlace = () => {
           <div className='my-1.5'>
             <h4>Check Out</h4>
             <div className='flex gap-5'>
-              {/* <DatePicker value={checkOut} onChange={setcheckOut} /> */}
+
               <input type='date' value={checkOut} onChange={setcheckOut} className='border-[1px] rounded-lg p-2' />
               <TimePicker onChange={setcheckOutT} value={checkOutT} />
             </div>
@@ -285,7 +311,6 @@ const EditPlace = () => {
         <div className='w-full my-2.5'>
           <h4>Extra Info</h4>
           <ReactQuill text={extraInfo} changeText={setExtraInfo} />
-          {/* <textarea rows={3} cols={50} placeholder='House rules, etc...' onChange={e => setExtraInfo(e.target.value)} value={extraInfo} /> */}
         </div>
 
         <button className='btnfunc'>Update</button>

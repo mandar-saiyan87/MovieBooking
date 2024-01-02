@@ -3,8 +3,10 @@ import requests
 from bson import ObjectId
 from db import mongodb
 from .user_routes import get_user
+from config import AppConfig, replace_special
 from flask_jwt_extended import jwt_required
-
+import os
+import shutil
 
 places_routes = Blueprint('/api/places', __name__)
 
@@ -29,7 +31,7 @@ def get_all_places():
         else:
             return {"status": "Failed", "msg": "No places found", "user_places": []}
     except Exception as e:
-        return {"status": 'Failed', "msg": "Somthing went wrong", "error": str(e)}
+        return {"status": 'Error', "msg": "Somthing went wrong", "error": str(e)}
 
 
 @places_routes.route('/api/places/placebyuser', methods=['GET'])
@@ -49,7 +51,7 @@ def get_user_places():
         else:
             return {"status": "Failed", "msg": "No places found", "user_places": []}
     except Exception as e:
-        return {"status": "Failed", "msg": "Something went wrong", "error": str(e)}
+        return {"status": "Error", "msg": "Something went wrong", "error": str(e)}
 
 
 @places_routes.route('/api/places/getplace/<id>', methods=['GET'])
@@ -70,7 +72,7 @@ def get_place_by_id(id):
         else:
             return {"status": 'Failed', "msg": "Place not found"}
     except Exception as e:
-        return {"status": 'Failed', "msg": "Somthing went wrong, please try again", "error": str(e)}
+        return {"status": 'Error', "msg": "Somthing went wrong, please try again", "error": str(e)}
 
 
 @places_routes.route('/api/places/updateplace/<id>', methods=['PUT'])
@@ -83,4 +85,24 @@ def update_place_by_id(id):
             {'_id': placeID}, {'$set': placeData})
         return {"status": 'Success', "msg": "Place found"}
     except Exception as e:
-        return {"status": 'Failed', "msg": "Somthing went wrong, please try again", "error": str(e)}
+        return {"status": 'Error', "msg": "Somthing went wrong, please try again", "error": str(e)}
+
+
+@places_routes.route('/api/places/deleteplace/<id>', methods=['DELETE'])
+@jwt_required()
+def delete_place(id):
+    current_user = get_user()
+    placeData = mongodb.places.find_one({'_id': ObjectId(id)})
+    folder_title = placeData['title']
+    folder_name = replace_special(folder_title).replace(' ', '_')
+    try:
+        folder_path = os.path.join(
+            AppConfig.UPLOAD_FOLDER, f'photo_uploads/{current_user}/{folder_name}')
+        if os.path.exists(folder_path):
+            shutil.rmtree(folder_path, ignore_errors=True)
+        placeDelete = mongodb.places.find_one_and_delete({'_id': ObjectId(id)})
+        bookings = mongodb.bookings.delete_many({'placeid': id})
+        return {"status": "Success", "msg": "Place deleted"}
+    except Exception as e:
+        print(str(e))
+        return {"status": 'Error', "msg": "Somthing went wrong, please try again", "error": str(e)}

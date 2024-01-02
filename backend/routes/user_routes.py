@@ -2,7 +2,7 @@ import os
 from flask import Blueprint, request, url_for, session
 from bson import ObjectId
 from db import mongodb
-from config import NewUser, AppConfig, allowed_file, NewPlace
+from config import NewUser, AppConfig, allowed_file, NewPlace, replace_special
 from flask_bcrypt import check_password_hash
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from werkzeug.utils import secure_filename
@@ -69,7 +69,7 @@ def login():
         else:
             return {"status": "Failed", "msg": "Invalid credentials. Please check username / password"}
     except Exception as e:
-        return {"status": "Failed", "srverror": str(e), "msg": "Someting went wrong, please try again later!"}
+        return {"status": "Error", "srverror": str(e), "msg": "Someting went wrong, please try again later!"}
 
 
 @user_routes.route('/api/users/profile', methods=['GET'])
@@ -93,7 +93,7 @@ def logout():
         return {"msg": "Logout Successful", 'status': 'Success'}
     except Exception as e:
         print(e)
-        return {"msg": "Logout Failed", "status": "Failed", "error": str(e)}
+        return {"msg": "Error", "status": "Failed", "error": str(e)}
 
 
 @user_routes.route('/api/users/photofromdevice', methods=['POST'])
@@ -102,7 +102,8 @@ def upload_device_photo():
 
     userId = get_user()
     data = request.files['file']
-    folder_name = request.form.get('title').replace(" ", "_")
+    folder_title = request.form.get('title')
+    folder_name = replace_special(folder_title).replace(' ', '_')
 
     if data.filename == '':
         return {"status": "Failed", "msg": "No file selected"}
@@ -137,7 +138,8 @@ def upload_device_photo():
 def delete_image():
     userId = get_user()
     image_path = request.json['imgpath'].lstrip('/')
-    folder_name = str(request.json['title']).replace(" ", "_")
+    folder_title = str(request.json['title'])
+    folder_name = replace_special(folder_title).replace(' ', '_')
     try:
         if os.path.exists(image_path):
             os.remove(image_path)
@@ -157,7 +159,7 @@ def delete_image():
             return {'status': 'Success', 'msg': 'Could\'t delete image'}
 
     except Exception as e:
-        return {"status": "Failed", "msg": "Something went wrong, Please try again", "error": str(e)}
+        return {"status": "Error", "msg": "Something went wrong, Please try again", "error": str(e)}
 
 
 @user_routes.route('/api/users/newplace', methods=['POST'])
@@ -182,7 +184,7 @@ def add_newplace():
         else:
             return {"status": "Failed", "msg": "Place not added"}
     except Exception as e:
-        return {"status": "Failed", "msg": "Someting went wrong, please try again later!", "error": str(e)}
+        return {"status": "Error", "msg": "Someting went wrong, please try again later!", "error": str(e)}
 
 
 # @user_routes.route('/api/users/photos', methods=['GET'])
