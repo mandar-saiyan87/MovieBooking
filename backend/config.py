@@ -8,8 +8,11 @@ import re
 db_passwd = os.getenv('MONGO_PASSWORD')
 
 
+# class DBConfig:
+#     MONGO_URI = f'mongodb+srv://MongoDBPRJ:{db_passwd}@cluster0.u9qxrdf.mongodb.net/airbncDB?retryWrites=true&w=majority'
+
 class DBConfig:
-    MONGO_URI = f'mongodb+srv://MongoDBPRJ:{db_passwd}@cluster0.u9qxrdf.mongodb.net/airbncDB?retryWrites=true&w=majority'
+    MONGO_URI = f'mongodb+srv://MongoDBPRJ:{db_passwd}@cluster0.u9qxrdf.mongodb.net/airbncTest?retryWrites=true&w=majority'
 
 
 class AppConfig:
