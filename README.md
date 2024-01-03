@@ -14,7 +14,7 @@
 
 ## Known Issues and Limitations
 
-- Image reading problems during accommodation creation (Probably due to limited access for free accounts on Render.com). Suggest using image links instead of local device images.
+- Image rendering problems for saved images (uploaded from device) during accommodation creation (Probably due to limited access for free accounts on Render.com). Suggest using image links instead of local device images.
 - Can test image uploading from device on Local Machine setup for now.(Trying to understand and resolve the issue with deployment on Render.com)
 - Delays expected due to a free account on Render.com with limited resources.
 
