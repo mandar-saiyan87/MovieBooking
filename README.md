@@ -29,9 +29,6 @@
 5. Create collections in the database (users, places, bookings).
 6. Run the backend server using `python app.py`.
 
-##
-
--Email Me for queries: mdman2257@gmail.com
 
 ### Frontend Setup
 
@@ -51,3 +48,6 @@
 ## Future Development
 
 - The UI and functionality may change in the future as new ideas are implemented.
+
+##
+-Email Me for queries: mdman2257@gmail.com
