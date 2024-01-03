@@ -19,7 +19,7 @@ const Accomodations = () => {
 
   return (
     <>
-      <div className='max-w-[1536px] h-full bg-white text-center m-auto'>
+      <div className='max-w-[1536px] h-full text-center m-auto'>
         <Link href='/account/accomodations/newplace' className='btnfunc active:opacity-70'>+ Add New Place</Link>
         <ReccomendedPlaces />
       </div>
