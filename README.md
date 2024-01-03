@@ -29,6 +29,10 @@
 5. Create collections in the database (users, places, bookings).
 6. Run the backend server using `python app.py`.
 
+##
+
+-Email Me for queries: mdman2257@gmail.com
+
 ### Frontend Setup
 
 1. Install packages from `package.json`.
