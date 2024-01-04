@@ -9,14 +9,15 @@
 
 ## Deployment Information
 
-- The app is currently deployed on [Render.com](https://airbnc-hotelbooking.onrender.com).
-- Live link: [AirBnC Hotel Booking](https://airbnc-hotelbooking.onrender.com).
+- The app is currently deployed on [vercel.com](https://airbnc-holidays.vercel.app/).
+- Live link: [AirBnC Hotel Booking](https://airbnc-holidays.vercel.app/).
 
 ## Known Issues and Limitations
 
-- Image rendering problems for saved images (uploaded from device) during accommodation creation (Probably due to limited access for free accounts on Render.com). Suggest using image links instead of local device images.
-- Can test image uploading from device on Local Machine setup for now.(Trying to understand and resolve the issue with deployment on Render.com)
-- Delays expected due to a free account on Render.com with limited resources.
+- Image rendering problems for saved images (uploaded from device) during accommodation creation (Vercel doesn't allow storage usage e.g redis etc. for free plans). Suggesting using image links instead of local device images.
+- Tried to store images in database using GridFS but it takes too much time and resources causes delays so dropped the idea.
+- Can test image uploading from device on Local Machine setup for now.
+- Delays expected due to a free account on vercel.com with limited resources.
 
 ## Local Setup
 
@@ -33,8 +34,8 @@
 ### Frontend Setup
 
 1. Install packages from `package.json`.
-2. Create a `.env` file with the backend server's URL or IP (NEXT_PUBLIC_API_SRV).
-3. Run the frontend using `npm run dev`.
+2. Create a `.env` file with the backend server's URL or IP (NEXT_PUBLIC_API_SRV). If want to test only frontend you can use already hosted backend. Put backend server's url (https://hotelbooking-backend.vercel.app) and you are good to go.
+4. Run the frontend using `npm run dev`.
 
 ## GitHub Repository
 
