@@ -9,7 +9,7 @@ db_passwd = os.getenv('MONGO_PASSWORD')
 
 
 class DBConfig:
-    MONGO_URI = f'mongodb+srv://MongoDBPRJ:{db_passwd}@cluster0.u9qxrdf.mongodb.net/?retryWrites=true&w=majority'
+    MONGO_URI = f'mongodb+srv://hotelDB:{db_passwd}@cluster0.u9qxrdf.mongodb.net/?retryWrites=true&w=majority'
 
 
 class AppConfig:
