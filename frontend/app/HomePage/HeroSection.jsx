@@ -3,7 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 
-const getData = async () => {
+
+const getPlaces = async () => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/places/getplaces`, {
     cache: 'no-store'
   })
@@ -13,7 +14,7 @@ const getData = async () => {
 }
 
 const HeroSection = async () => {
-  const allPlaces = await getData()
+  const allPlaces = await getPlaces()
   return (
     <>
       <div className='max-w-[1536px] m-auto p-5 my-3'>
