@@ -75,7 +75,7 @@ Download github repo from link provided.
 
 ## Additional Notes
 
-- Emphasize the need to use image links during accommodation creation on the Render deployment.
+- Emphasize the need to use image links during accommodation creation on the Vercel deployment.
 - Inform users about possible delays on the website due to the free hosting account.
 
 ## Future Development
