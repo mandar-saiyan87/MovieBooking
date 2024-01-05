@@ -142,7 +142,7 @@ const BookingWidget = ({ place }) => {
       </button>
       {
         msg.message != '' &&
-        <div className='w-max fixed left-[45%] top-24 m-auto'>
+        <div className='w-max fixed top-24 left-0 m-auto lg:left-[45%]'>
           <AuthMsg status={msg.status} message={msg.message} />
         </div>
       }
