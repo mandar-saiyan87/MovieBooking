@@ -37,6 +37,8 @@ Welcome to the AirBnC Hotel Booking App! This is a basic hotel booking applicati
 
 ## Local Setup
 
+Download github repo from link provided.
+
 ### Backend Setup
 
 1. Create a virtual environment.
