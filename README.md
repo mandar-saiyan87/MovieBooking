@@ -52,7 +52,8 @@ Welcome to the AirBnC Hotel Booking App! This is a basic hotel booking applicati
 
    In db.py file put database name.
 
-   ```mongodb = MongoClient(DBConfig.MONGO_URI).get_database('airbncDB')
+   ```
+   mongodb = MongoClient(DBConfig.MONGO_URI).get_database('airbncDB')
    ``` 
 5. Create .env file in backend folder & set up environment variables (SECRET_KEY, JWT_SECRET_KEY, MONGO_PASSWORD).
 6. Create collections in the database (users, places, bookings).
