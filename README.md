@@ -42,9 +42,21 @@ Welcome to the AirBnC Hotel Booking App! This is a basic hotel booking applicati
 1. Create a virtual environment.
 2. Install packages from `requirements.txt`.
 3. Configure MongoDB Atlas with a new cluster and database (e.g., airbncDB).
-4. Set up environment variables (SECRET_KEY, JWT_SECRET_KEY, MONGO_PASSWORD).
-5. Create collections in the database (users, places, bookings).
-6. Run the backend server using `python app.py`.
+4. Take MONGODB_URI and put it into config.py file under DBConfig class: eg:
+
+    ```
+    class DBConfig:
+      MONGO_URI = f'mongodb+srv://hoteladmin:{db_passwd}@cluster0.o5mndfo.mongodb.net/?retryWrites=true&w=majority'
+    ```
+   db_paswd is MONGO_PASSWORD mentioned in .env.
+
+   In db.py file put database name.
+
+   ```mongodb = MongoClient(DBConfig.MONGO_URI).get_database('airbncDB')
+   ``` 
+5. Create .env file in backend folder & set up environment variables (SECRET_KEY, JWT_SECRET_KEY, MONGO_PASSWORD).
+6. Create collections in the database (users, places, bookings).
+7. Run the backend server using `python app.py`.
 
 
 ### Frontend Setup
