@@ -1,5 +1,5 @@
 ## Airbnc Holiday Booking Next.js 13
-Welcome to the AirBnC Hotel Booking App! This is a basic hotel booking application built using Next.js, Flask, MongoDB Atlas, and JWT authentication. The project is deployed on Render.com, and you can access the live version [here](https://airbnc-holidays.vercel.app).
+Welcome to the AirBnC Hotel Booking App! This is a basic hotel booking application built using Next.js, Flask, MongoDB Atlas, and JWT authentication. The project is deployed on Vercel.com, and you can access the live version [here](https://airbnc-holidays.vercel.app).
 
 ## Technologies Used
 
