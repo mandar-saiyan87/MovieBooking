@@ -6,6 +6,7 @@ import validator from 'validator';
 import Cookies from 'js-cookie';
 import AuthMsg from '../../../components/messages/AuthMsg';
 import userStore from '../../store/Store'
+import { validate } from '@/components/Utils/validator';
 
 const Login = () => {
 
@@ -27,16 +28,7 @@ const Login = () => {
     setLoginuser({ ...loginUser, [e.target.name]: e.target.value })
   }
 
-  const validate = (info) => {
-    if (loginUser.email === '' || loginUser.password === '') {
-      return { status: 'Failed', msg: 'All fields are required' }
-    }
-
-    if (!validator.isEmail(loginUser.email)) {
-      return { status: 'Failed', msg: 'Please enter valid email' }
-    }
-  }
-
+ 
   const handleUserLogin = async (e) => {
     e.preventDefault()
     const validationErr = validate(loginUser)
