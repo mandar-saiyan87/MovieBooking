@@ -7,13 +7,13 @@ import 'react-calendar/dist/Calendar.css';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import Amenities from '../../../../../components/account_components/Amenities';
-import AuthMsg from '../../../../../components/messages/AuthMsg';
+import Amenities from '@/components/account_components/Amenities';
+import AuthMsg from '@/components/messages/AuthMsg';
 import Cookies from 'js-cookie';
 
 
 const ReactQuill = dynamic(() => {
-  return import('../../../../../components/account_components/ReactQuillEditor');
+  return import('@/components/account_components/ReactQuillEditor');
 }, { ssr: false })
 
 

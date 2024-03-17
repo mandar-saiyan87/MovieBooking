@@ -28,7 +28,7 @@ const Login = () => {
 
 
   const handleUserLogin = async (e) => {
-    e.preventDefault()
+   e.preventDefault()
     const validationErr = validate(loginUser)
     if (validationErr) {
       setAuthMsg({
