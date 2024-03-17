@@ -13,7 +13,7 @@ import Cookies from 'js-cookie';
 
 
 const ReactQuill = dynamic(() => {
-  return import('../../../../../components/account_components/ReactQuillEditor');
+  return import('@/components/account_components/ReactQuillEditor');
 }, { ssr: false })
 
 

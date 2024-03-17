@@ -2,13 +2,13 @@
 import React, { useState } from 'react'
 import { redirect } from 'next/navigation'
 import { differenceInCalendarDays } from 'date-fns'
-import userStore from '@/app/store/Store';
+import useUserStore from '@/app/store/userStore'
 import AuthMsg from '@/components/messages/AuthMsg';
 import Cookies from 'js-cookie';
 
 const BookingWidget = ({ place }) => {
 
-  const user = userStore((state) => state.current_user)
+  const user = useUserStore((state) => state.current_user)
   const token = Cookies.get('token')
   const placeId = place._id
   const [redirectTo, setRedirect] = useState(false)
