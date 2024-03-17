@@ -6,14 +6,14 @@ import Image from 'next/image';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-clock/dist/Clock.css';
-import Amenities from '../../../../components/account_components/Amenities';
-import AuthMsg from '../../../../components/messages/AuthMsg';
+import Amenities from '../../../../../components/account_components/Amenities';
+import AuthMsg from '../../../../../components/messages/AuthMsg';
 import Cookies from 'js-cookie';
 
 
 
 const ReactQuill = dynamic(() => {
-  return import('../../../../components/account_components/ReactQuillEditor');
+  return import('../../../../../components/account_components/ReactQuillEditor');
 }, { ssr: false })
 
 
@@ -129,8 +129,9 @@ const NewPlace = () => {
         },
         body: JSON.stringify({
           title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, price, extraInfo
-        })
-      })
+        }),
+      },
+      )
       const data = await req.json()
       // console.log(data)
       if (data.status === 'Success') {
@@ -275,22 +276,3 @@ const NewPlace = () => {
 }
 
 export default NewPlace
-
-
-// const photoByLink = async (e) => {
-//   e.preventDefault()
-
-//   const req = await fetch('http://127.0.0.1:5000/api/users/photobylink', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${token}`,
-//     },
-//     body: JSON.stringify({ title: title, image_url: photoLink })
-//   })
-//   const data = await req.json()
-//   // console.log(data)
-//   if (result.status === 'Success') {
-//     setPhotos(result['userImages'])
-//   }
-// }

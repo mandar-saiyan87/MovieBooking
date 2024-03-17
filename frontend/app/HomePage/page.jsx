@@ -4,16 +4,19 @@ import Link from 'next/link'
 
 
 
-const getPlaces = async () => {
+export const getPlaces = async () => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/places/getplaces`, {
-    cache: 'no-store'
+    cache: 'no-store',
+    next: {
+      tags: ['Places']
+    }
   })
   const data = await req.json()
-  // console.log(data.places)
   return data.places
 }
 
 const HeroSection = async () => {
+
   const allPlaces = await getPlaces()
   return (
     <>

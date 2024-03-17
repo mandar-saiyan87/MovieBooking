@@ -1,49 +1,29 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
-import userStore from '../../store/Store';
-import Cookies from 'js-cookie';
-import AuthMsg from '../../../components/messages/AuthMsg';
+import useUserStore from '@/app/store/userStore';
+import AuthMsg from '@/components/messages/AuthMsg';
+import Loading from '@/app/HomePage/loading';
+
 
 const Profile = () => {
 
   const [redirectTo, setRedirectTo] = useState(false)
 
   const router = useRouter()
-  const setCurrent = userStore((state) => state.setUser)
-  const current_user = userStore((state) => state.current_user)
+  const { current_user, logoutUser, loading } = useUserStore((state) => state)
 
   const [authMsg, setAuthMsg] = useState({
     status: '',
     message: ''
   })
 
-  // useLayoutEffect(() => {
-  //   if (current_user === null) {
-  //     redirect('/auth/login')
-  //   }
-  // })
 
-  useEffect(() => {
-    if (redirectTo) {
-      router.push('/')
-      setTimeout(() => {
-        setCurrent(null)
-      }, [400])
-    }
-  }, [redirectTo])
 
   const userLogout = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/users/logout`,
-      {
-        method: 'POST',
-      }
-    )
-    const data = await res.json()
-    if (data.status === 'Success') {
-      Cookies.remove('token')
-      setRedirectTo(true)
-      // setCurrent(null)
+    const loggedOut = await logoutUser()
+    if (loggedOut.status === 'Success') {
+      router.push('/auth/login')
     }
     else {
       setAuthMsg({
@@ -64,10 +44,12 @@ const Profile = () => {
   return (
     <>
       <div className='max-w-[1536px] m-auto bg-white'>
-        <div className='max-w-2xl text-center m-auto'>
-          <p>Logged is as ({current_user?.email})</p>
-          <button className='btnfunc my-5 min-w-[150px] md:w-full max-w-sm active:opacity-75' onClick={userLogout}>Logout</button>
-        </div>
+        {current_user === null ? <Loading /> :
+          <div className='max-w-2xl text-center m-auto'>
+            <p>Logged is as ({current_user?.email})</p>
+            <button className='btnfunc my-5 min-w-[150px] md:w-full max-w-sm active:opacity-75' onClick={userLogout}>Logout</button>
+          </div>
+        }
       </div>
 
       {

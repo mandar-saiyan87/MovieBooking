@@ -2,10 +2,17 @@
 
 import React, { useState } from 'react'
 import Link from 'next/link'
-import validator from 'validator';
-import AuthMsg from '../../../components/messages/AuthMsg';
+import { validate } from '@/components/Utils/validator';
+import AuthMsg from '@/components/messages/AuthMsg';
+import useUserStore from '@/app/store/userStore';
+import Loading from '@/app/HomePage/loading';
+import { useRouter } from 'next/navigation';
 
 const Register = () => {
+
+  const { registerUser, loading } = useUserStore((state) => state)
+
+  const router = useRouter()
 
   const [newUser, setNewuser] = useState({
     name: '',
@@ -22,24 +29,6 @@ const Register = () => {
     setNewuser({ ...newUser, [e.target.name]: e.target.value })
   }
 
-  const validate = (info) => {
-    if (newUser.name === '' || newUser.email === '' || newUser.password === '') {
-      return { status: 'Failed', msg: 'All fields are required' }
-    }
-
-    if (newUser.name.length < 3) {
-      return { status: 'Failed', msg: 'Name should be atleast 3 characters' }
-    }
-
-    if (!validator.isEmail(info.email)) {
-      return { status: 'Failed', msg: 'Please enter valid email' }
-    }
-
-    if (newUser.password.length < 8) {
-      return { status: 'Failed', msg: 'Password atleast 8 characters' }
-    }
-  }
-
   const submitForm = async (e) => {
     e.preventDefault()
     // console.log(newUser)
@@ -54,54 +43,45 @@ const Register = () => {
           status: '',
           message: ''
         })
-      }, 4000)
+      }, 3000)
     } else {
-      try {
-        const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/users/register`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newUser)
-        })
-        const data = await req.json()
-        // console.log(data)
+      const registered = await registerUser(newUser)
+      if (registered.status === 'Success') {
         setAuthMsg({
-          status: data.status,
-          message: data.msg
+          status: registered.status,
+          message: registered.msg
         })
         setNewuser({
           name: '',
           email: '',
           password: ''
         })
-        setTimeout(() => {
-          setAuthMsg({
-            status: '',
-            message: ''
-          })
-        }, 4000);
-      } catch (error) {
+        router.push('/auth/login')
+      } else if (registered.status === 'Failed' || registered.status === 'Warning') {
+        setAuthMsg({
+          status: registered.status,
+          message: registered.msg
+        })
+      } else {
         setAuthMsg({
           status: 'Failed',
-          message: 'Something went wrong, Please try again!'
+          message: 'Something went wrong, Please try again later!'
         })
-        setTimeout(() => {
-          setAuthMsg({
-            status: '',
-            message: ''
-          })
-        }, 4000);
       }
+      setTimeout(() => {
+        setAuthMsg({
+          status: '',
+          message: ''
+        })
+      }, 3000);
     }
-
   }
 
 
 
   return (
     <div className='w-full max-w-[1920px] h-screen bg-white m-auto relative'>
-      <div className='w-full h-full flex justify-center max-w-2xl m-auto'>
+      {loading ? <Loading /> : <div className='w-full h-full flex justify-center max-w-2xl m-auto'>
         <div className='text-center w-full max-w-lg mt-44'>
           <h2 className='text-2xl font-medium mb-2 tracking-wide'>Register</h2>
           <form className='w-full px-4 flex flex-col' onSubmit={submitForm} noValidate>
@@ -112,7 +92,7 @@ const Register = () => {
           </form>
           <p className='text-slate-400'>Already have an account? <Link href='/auth/login' className='underline text-primary'>Login</Link></p>
         </div>
-      </div>
+      </div>}
       {
         authMsg.message != '' && <div className='w-max fixed left-0 top-24'>
           <AuthMsg status={authMsg.status} message={authMsg.message} />

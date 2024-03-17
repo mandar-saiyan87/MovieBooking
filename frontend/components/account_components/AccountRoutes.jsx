@@ -1,23 +1,20 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useLayoutEffect } from 'react'
+import isAuth from '@/app/account/isAuth'
 import { useRouter, usePathname } from 'next/navigation'
-import userStore from '../../app/store/Store'
+import useUserStore from '@/app/store/userStore'
 import Link from 'next/link'
 
-const Account = () => {
+const AccountRoutes = () => {
 
-  const [tab, setTab] = useState('/account/profile')
-  const currentUser = userStore((state) => state.current_user)
-  const currentPath = usePathname()
   const router = useRouter()
 
-  useEffect(() => {
-    if (currentUser === null) {
-      router.push('/auth/login')
-    }
-  })
+  const [tab, setTab] = useState('/account/profile')
+  const currentUser = useUserStore((state) => state.current_user)
+  const currentPath = usePathname()
 
-  useEffect(() => {
+
+  useLayoutEffect(() => {
     setTab(currentPath)
   }, [currentPath])
 
@@ -53,7 +50,7 @@ const Account = () => {
   )
 }
 
-export default Account
+export default isAuth(AccountRoutes)
 
 
 // < div className = 'mt-10' >

@@ -1,5 +1,5 @@
 import React from "react"
-import Account from "../../components/account_components/Account"
+import Account from "./page"
 
 export default function AccountLayout({ children }) {
   return (

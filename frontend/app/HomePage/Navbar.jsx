@@ -2,16 +2,22 @@
 import React, { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import Cookies from 'js-cookie';
-import userStore from '../store/Store';
+import useUserStore from '@/app/store/userStore';
+import axios from 'axios'
+
 
 
 const Navbar = () => {
 
-  const searchBar = useRef()
-  const user = userStore((state) => state.current_user)
-  const setUser = userStore((state) => state.setUser)
   const token = Cookies.get('token')
+
+  const current_user = useUserStore((state) => state.current_user)
+
+  // console.log(current_user)
+
+  const searchBar = useRef()
   const [searchClick, setSearchclick] = useState(false)
+
 
   const handleSearch = (event) => {
     if (searchBar.current && !searchBar.current.contains(event.target)) {
@@ -29,16 +35,18 @@ const Navbar = () => {
   }, [searchClick])
 
 
-
   useEffect(() => {
-    if (user === null && token) {
-      const req = fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/users/profile`, {
-        method: 'GET',
+    if (current_user === null && token) {
+      const res = axios.get(`${process.env.NEXT_PUBLIC_API_SRV}/api/users/profile`, {
         headers: {
           'Authorization': `Bearer ${token}`,
-        },
-      }).then(response => response.json()).then(data => setUser(data.userInfo))
-        .catch(error => console.error(error))
+        }
+      }).then(response => response.data).then(data =>
+        useUserStore.setState({
+          current_user: data.userInfo,
+          token: token
+        })
+      )
     }
   })
 
@@ -84,12 +92,12 @@ const Navbar = () => {
           </div>
           {/* <input type="text" placeholder='Anywhere . Any Week . Add Guest' className='focus:outline-none' /> */}
         </div>
-        <Link href={user ? '/account/profile' : '/auth/login'} className='flex cursor-pointer sm:px-3 py-2 md:border-[1px] gap-2.5 rounded-full items-center'>
+        <Link href={current_user ? '/account/profile' : '/auth/login'} className='flex cursor-pointer sm:px-3 py-2 md:border-[1px] gap-2.5 rounded-full items-center'>
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="hidden md:flex w-5 h-5">
             <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
 
-          {user != null ? <p className='text-white font-[600] text-sm bg-black rounded-full px-2 py-1'>{user.name.charAt(0)}</p> :
+          {current_user != null ? <p className='text-white font-[600] text-sm bg-black rounded-full px-2 py-1'>{current_user.name.charAt(0)}</p> :
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-8 h-8 md:w-6 md:h-6">
               <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>}

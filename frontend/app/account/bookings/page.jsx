@@ -1,7 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import { redirect } from 'next/navigation'
-import userStore from '@/app/store/Store'
+import useUserStore from '@/app/store/userStore';
 import Cookies from 'js-cookie';
 import { format, differenceInCalendarDays } from 'date-fns'
 import Spinner from '@/components/Spinner';
@@ -9,16 +9,10 @@ import Spinner from '@/components/Spinner';
 const Bookings = () => {
 
   const [spinner, setSpinner] = useState(true)
-  const currentUser = userStore((state) => state.current_user)
+  const currentUser = useUserStore((state) => state.current_user)
   const token = Cookies.get('token')
 
   const [bookings, setBookings] = useState([])
-
-  // useLayoutEffect(() => {
-  //   if (currentUser === null) {
-  //     redirect('/auth/login')
-  //   }
-  // })
 
 
   const getBookings = async () => {

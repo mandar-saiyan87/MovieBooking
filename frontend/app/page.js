@@ -1,5 +1,5 @@
 import React, { Suspense } from "react"
-import HeroSection from "./HomePage/HeroSection"
+import HeroSection from "./HomePage/page"
 
 
 
