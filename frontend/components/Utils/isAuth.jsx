@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react'
 import { redirect } from 'next/navigation'
-import useUserStore from '../store/userStore'
+import useUserStore from '../../app/store/userStore'
 
 
 function isAuth(Component) {

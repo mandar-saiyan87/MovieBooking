@@ -1,6 +1,6 @@
 'use client'
 import React, { useState, useLayoutEffect } from 'react'
-import isAuth from '@/app/account/isAuth'
+import isAuth from '@/components/Utils/isAuth'
 import { useRouter, usePathname } from 'next/navigation'
 import useUserStore from '@/app/store/userStore'
 import Link from 'next/link'
@@ -52,16 +52,3 @@ const AccountRoutes = () => {
 
 export default isAuth(AccountRoutes)
 
-
-// < div className = 'mt-10' >
-//   { tab === 'profile' ? <Profile setredirect={setRedirectTo} redirectTo={redirectTo} /> :
-//   tab === 'bookings' ? <Bookings /> :
-//     tab === 'accomodations' && <Accomodations />
-//           }
-//         </ div>
-
-// let tab = 'profile'
-// const params = useSearchParams()
-// if (params.get('page') != null) {
-//   tab = params.get('page')
-// }
