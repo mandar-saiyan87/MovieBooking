@@ -13,8 +13,6 @@ const Navbar = () => {
 
   const current_user = useUserStore((state) => state.current_user)
 
-  // console.log(current_user)
-
   const searchBar = useRef()
   const [searchClick, setSearchclick] = useState(false)
 
