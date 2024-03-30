@@ -1,5 +1,5 @@
 'use client'
-import React, { useState, useEffect, Suspense } from 'react'
+import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
 import { redirect, useSearchParams } from 'next/navigation';
 import Image from 'next/image';
@@ -223,7 +223,6 @@ const EditPlace = () => {
 
 
   return (
-    <Suspense>
       <div className='max-w-[1536px] m-auto bg-white py-6 px-2'>
         <button className='btnfunc mb-7' onClick={deletePlace}>Delete</button>
         <form onSubmit={submitPlace}>
@@ -322,7 +321,6 @@ const EditPlace = () => {
           </div>
         }
       </div>
-    </Suspense>
   )
 }
 
