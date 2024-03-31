@@ -1,10 +1,10 @@
 import React, { Suspense } from 'react'
-import EditPlace from './EditPlace'
+import EditPlaceComponent from './EditPlaceComponent'
 
 function EditPlace() {
   return (
     <Suspense>
-      <EditPlace />
+      <EditPlaceComponent />
     </Suspense>
   )
 }
