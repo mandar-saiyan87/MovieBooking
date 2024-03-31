@@ -1,7 +1,8 @@
 'use client'
 import React, { useState, useEffect } from 'react'
 import dynamic from 'next/dynamic'
-import { redirect, useSearchParams } from 'next/navigation';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { revalidatepath } from '@/components/Utils/revalidate';
 import Image from 'next/image';
 import 'react-calendar/dist/Calendar.css';
 import TimePicker from 'react-time-picker';
@@ -19,11 +20,13 @@ const ReactQuill = dynamic(() => {
 
 const EditPlaceComponent = () => {
 
+  const router = useRouter()
+
+
   const searchparams = useSearchParams()
 
   const placeId = searchparams.get('id')
 
-  const [redirectTo, setRedirectTo] = useState(false)
 
   const [title, setTitle] = useState('')
   const [address, setAddress] = useState('')
@@ -50,11 +53,11 @@ const EditPlaceComponent = () => {
   const token = Cookies.get('token')
 
 
-  useEffect(() => {
-    if (redirectTo) {
-      redirect('/account/accomodations')
-    }
-  }, [redirectTo])
+  // useEffect(() => {
+  //   if (redirectTo) {
+  //     redirect('/')
+  //   }
+  // }, [redirectTo])
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/places/getplace/${placeId}`, {
@@ -157,7 +160,9 @@ const EditPlaceComponent = () => {
           title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, price, extraInfo
         })
       })
+      revalidatepath()
       const data = await req.json()
+
       // console.log(data)
       if (data.status === 'Success') {
         setTitle('')
@@ -172,7 +177,7 @@ const EditPlaceComponent = () => {
         setGuests('')
         setExtraInfo('')
         setPrice('1000')
-        setRedirectTo(true)
+        router.push('/')
       } else {
         setAuthMsg({
           status: 'Failed',
@@ -203,9 +208,11 @@ const EditPlaceComponent = () => {
         'Authorization': `Bearer ${token}`,
       },
     })
+    revalidatepath()
     const resp = await req.json()
+
     if (resp.status === 'Success') {
-      setRedirectTo(true)
+      router.push('/')
     } else {
       setAuthMsg({
         status: 'Failed',
@@ -328,20 +335,3 @@ export default EditPlaceComponent
 
 
 
-// const photoByLink = async (e) => {
-//   e.preventDefault()
-
-//   const req = await fetch('http://127.0.0.1:5000/api/users/photobylink', {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/json',
-//       'Authorization': `Bearer ${token}`,
-//     },
-//     body: JSON.stringify({ title: title, image_url: photoLink })
-//   })
-//   const data = await req.json()
-//   // console.log(data)
-//   if (result.status === 'Success') {
-//     setPhotos(result['userImages'])
-//   }
-// }

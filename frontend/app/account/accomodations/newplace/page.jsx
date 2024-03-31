@@ -1,7 +1,8 @@
 'use client'
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import dynamic from 'next/dynamic'
-import { redirect } from 'next/navigation'
+import { revalidatepath } from '@/components/Utils/revalidate';
+import { useRouter } from 'next/navigation'
 import Image from 'next/image';
 import TimePicker from 'react-time-picker';
 import 'react-time-picker/dist/TimePicker.css';
@@ -11,7 +12,6 @@ import AuthMsg from '@/components/messages/AuthMsg';
 import Cookies from 'js-cookie';
 
 
-
 const ReactQuill = dynamic(() => {
   return import('@/components/account_components/ReactQuillEditor');
 }, { ssr: false })
@@ -19,7 +19,7 @@ const ReactQuill = dynamic(() => {
 
 const NewPlace = () => {
 
-  const [redirectTo, setRedirectTo] = useState(false)
+  const router = useRouter()
 
   const [title, setTitle] = useState('')
   const [address, setAddress] = useState('')
@@ -43,11 +43,11 @@ const NewPlace = () => {
 
   const token = Cookies.get('token')
 
-  useEffect(() => {
-    if (redirectTo) {
-      redirect('/account/accomodations')
-    }
-  }, [redirectTo])
+  // useEffect(() => {
+  //   if (redirectTo) {
+  //     redirect('/')
+  //   }
+  // }, [redirectTo])
 
   const photoByLink = (e) => {
     e.preventDefault()
@@ -96,8 +96,9 @@ const NewPlace = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify({ imgpath, title })
+        body: JSON.stringify({ imgpath, title }),
       })
+      customrevalidateTag('Places')
       const result = await req.json()
       // console.log(result)
       if (result.status === 'Success') {
@@ -130,9 +131,12 @@ const NewPlace = () => {
         body: JSON.stringify({
           title, address, photos, description, amenities, checkIn, checkInT, checkOut, checkOutT, guests, price, extraInfo
         }),
+
       },
       )
+      revalidatepath()
       const data = await req.json()
+
       // console.log(data)
       if (data.status === 'Success') {
         setTitle('')
@@ -147,7 +151,7 @@ const NewPlace = () => {
         setGuests('')
         setExtraInfo('')
         setPrice('1000')
-        setRedirectTo(true)
+        router.push('/')
       } else {
         setAuthMsg({
           status: 'Failed',
