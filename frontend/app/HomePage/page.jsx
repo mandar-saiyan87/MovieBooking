@@ -6,7 +6,6 @@ import Link from 'next/link'
 
 export const getPlaces = async () => {
   const req = await fetch(`${process.env.NEXT_PUBLIC_API_SRV}/api/places/getplaces`, {
-    cache: 'no-store',
     next: {
       revalidate: 0
     }
